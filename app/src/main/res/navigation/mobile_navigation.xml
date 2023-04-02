@@ -7,25 +7,20 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.sjsu.hackathon.merfstsdb.ui.home.HomeFragment"
+        android:name="com.sjsu.hackathon.ingredient_manager.ui.home.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_dashboard"
-        android:name="com.sjsu.hackathon.merfstsdb.ui.dashboard.DashboardFragment"
+        android:name="com.sjsu.hackathon.ingredient_manager.ui.dashboard.DashboardFragment"
         android:label="@string/title_dashboard"
         tools:layout="@layout/fragment_dashboard" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.sjsu.hackathon.merfstsdb.ui.notifications.NotificationsFragment"
+        android:name="com.sjsu.hackathon.ingredient_manager.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
-    <fragment
-        android:id="@+id/navigation_trade"
-        android:name="com.sjsu.hackathon.merfstsdb.ui.trade.TradeFragment"
-        android:label="@string/title_trade"
-        tools:layout="@layout/fragment_trade" />
 </navigation>

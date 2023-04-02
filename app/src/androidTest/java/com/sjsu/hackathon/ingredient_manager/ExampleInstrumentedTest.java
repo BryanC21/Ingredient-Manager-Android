@@ -1,4 +1,4 @@
-package com.sjsu.hackathon.merfstsdb;
+package com.sjsu.hackathon.ingredient_manager;
 
 import android.content.Context;
 
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.sjsu.hackathon.merfstsdb", appContext.getPackageName());
+        assertEquals("com.sjsu.hackathon.ingredient_manager", appContext.getPackageName());
     }
 }

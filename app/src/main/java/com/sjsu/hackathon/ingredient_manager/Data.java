@@ -1,4 +1,4 @@
-package com.sjsu.hackathon.merfstsdb;
+package com.sjsu.hackathon.ingredient_manager;
 
 public class Data {
     private String year;

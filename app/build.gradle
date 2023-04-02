@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.sjsu.hackathon.merfstsdb'
+    namespace 'com.sjsu.hackathon.ingredient_manager'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.sjsu.hackathon.merfstsdb"
+        applicationId 'com.sjsu.hackathon.ingredient_manager'
         minSdk 28
         targetSdk 33
         versionCode 1

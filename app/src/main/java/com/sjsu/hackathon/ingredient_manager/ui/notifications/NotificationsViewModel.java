@@ -1,16 +1,16 @@
-package com.sjsu.hackathon.merfstsdb.ui.trade;
+package com.sjsu.hackathon.ingredient_manager.ui.notifications;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class TradeViewModel extends ViewModel {
+public class NotificationsViewModel extends ViewModel {
 
     private final MutableLiveData<String> mText;
 
-    public TradeViewModel() {
+    public NotificationsViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is trade fragment");
+        mText.setValue("This is notifications fragment");
     }
 
     public LiveData<String> getText() {

@@ -1,7 +1,7 @@
 <resources>
-    <string name="app_name">MERFSTSDb</string>
     <string name="title_home" />
     <string name="title_dashboard" />
     <string name="title_notifications" />
     <string name="title_trade" />
+    <string name="app_name">ingredient_manager</string>
 </resources>

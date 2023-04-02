@@ -15,9 +15,4 @@
         android:id="@+id/navigation_notifications"
         android:icon="@drawable/baseline_agriculture_24"
         android:title="@string/title_notifications" />
-
-    <item
-        android:id="@+id/navigation_trade"
-        android:icon="@drawable/baseline_attach_money_24"
-        android:title="@string/title_notifications" />
 </menu>

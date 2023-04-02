@@ -1,7 +1,5 @@
-package com.sjsu.hackathon.merfstsdb.ui.dashboard;
+package com.sjsu.hackathon.ingredient_manager.ui.notifications;
 
-import android.content.Context;
-import android.content.SyncAdapterType;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -10,78 +8,68 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.helper.widget.Layer;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.jjoe64.graphview.GraphView;
-import com.jjoe64.graphview.helper.DateAsXAxisLabelFormatter;
 import com.jjoe64.graphview.series.DataPoint;
 import com.jjoe64.graphview.series.LineGraphSeries;
-import com.sjsu.hackathon.merfstsdb.Annotation;
-import com.sjsu.hackathon.merfstsdb.AnnotationDBHandler;
-import com.sjsu.hackathon.merfstsdb.DBHandler;
-import com.sjsu.hackathon.merfstsdb.Data;
-import com.sjsu.hackathon.merfstsdb.DataListener;
-import com.sjsu.hackathon.merfstsdb.FetchData;
-import com.sjsu.hackathon.merfstsdb.MainActivity;
-import com.sjsu.hackathon.merfstsdb.R;
-import com.sjsu.hackathon.merfstsdb.databinding.FragmentDashboardBinding;
-import com.sjsu.hackathon.merfstsdb.ui.Constants;
-import com.sjsu.hackathon.merfstsdb.ui.home.HomeFragment;
+import com.sjsu.hackathon.ingredient_manager.Annotation;
+import com.sjsu.hackathon.ingredient_manager.AnnotationDBHandler;
+import com.sjsu.hackathon.ingredient_manager.DBHandler;
+import com.sjsu.hackathon.ingredient_manager.Data;
+import com.sjsu.hackathon.ingredient_manager.DataListener;
+import com.sjsu.hackathon.ingredient_manager.FetchData;
+import com.sjsu.hackathon.ingredient_manager.MainActivity;
+import com.sjsu.hackathon.ingredient_manager.R;
+import com.sjsu.hackathon.ingredient_manager.databinding.FragmentNotificationsBinding;
+import com.sjsu.hackathon.ingredient_manager.ui.Constants;
+import com.sjsu.hackathon.ingredient_manager.ui.home.HomeFragment;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
-import java.util.Date;
-import java.util.Locale;
 
-public class DashboardFragment extends Fragment implements DataListener {
+public class NotificationsFragment extends Fragment implements DataListener {
 
-    private FragmentDashboardBinding binding;
-    //final Context context=this;
+    private FragmentNotificationsBinding binding;
+
     private boolean GDP = false;
     private boolean FDII = false;
     private boolean FDIO = false;
 
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        DashboardViewModel dashboardViewModel =
-                new ViewModelProvider(this).get(DashboardViewModel.class);
+        NotificationsViewModel notificationsViewModel =
+                new ViewModelProvider(this).get(NotificationsViewModel.class);
 
-        binding = FragmentDashboardBinding.inflate(inflater, container, false);
+        binding = FragmentNotificationsBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-//        final TextView textView = binding.textDashboard;
-//        dashboardViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+//        final TextView textView = binding.textNotifications;
+//        notificationsViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
 
-        Button show = root.findViewById(R.id.mac_show);
-
-        EditText startY = root.findViewById(R.id.mac_start);
-        String startYear = startY.getText().toString();
-        EditText endY = root.findViewById(R.id.mac_end_year);
-        String endYear = endY.getText().toString();
-        String country = MainActivity.country;
-
-        System.out.println(country);
-
-        Layer formLayout = root.findViewById(R.id.mac_layer);
-        Layer chartLayout = root.findViewById(R.id.mac_chart_layer);
-        Layer annLayout = root.findViewById(R.id.mac_ann_layer);
+        Button show = root.findViewById(R.id.agri_show);
+        Layer formLayout = root.findViewById(R.id.agri_form_layer);
+        Layer chartLayout = root.findViewById(R.id.agri_chart_layer);
+        Layer annLayout = root.findViewById(R.id.agri_ann_layer);
 
         formLayout.setVisibility(View.VISIBLE);
         chartLayout.setVisibility(View.INVISIBLE);
         annLayout.setVisibility(View.INVISIBLE);
+
+        EditText startY = root.findViewById(R.id.agri_start);
+        String startYear = startY.getText().toString();
+        EditText endY = root.findViewById(R.id.agri_end_year);
+        String endYear = endY.getText().toString();
+        String country = MainActivity.country;
+
+        chartLayout.setVisibility(View.INVISIBLE);
 
         GraphView graph = root.findViewById(R.id.graph);
 
@@ -92,59 +80,58 @@ public class DashboardFragment extends Fragment implements DataListener {
         //Default show 1980 to 2020
         FetchData fd = new FetchData();
 
-        Button applyYears = root.findViewById(R.id.mac_button);
+        Button applyYears = root.findViewById(R.id.agri_button);
         applyYears.setOnClickListener(view -> {
 
             //System.out.println(startYear);
 
-            EditText startY2 = root.findViewById(R.id.mac_start);
+            EditText startY2 = root.findViewById(R.id.agri_start);
             String startYear2 = startY2.getText().toString();
-            EditText endY2 = root.findViewById(R.id.mac_end_year);
+            EditText endY2 = root.findViewById(R.id.agri_end_year);
             String endYear2 = endY2.getText().toString();
 
             graph.removeAllSeries();
 
-            if(GDP){
-                fd.getData(new DBHandler(this.getContext()),"GDP", startYear2, endYear2, country, this);
+            if (GDP) {
+                fd.getData(new DBHandler(this.getContext()), "Contribution To GDP", startYear2, endYear2, country, this);
             }
 
-            if(FDII){
-                fd.getData(new DBHandler(this.getContext()),"FDI Inflows", startYear2, endYear2, country, this);
+            if (FDII) {
+                fd.getData(new DBHandler(this.getContext()), "Fertilizers", startYear2, endYear2, country, this);
             }
 
-            if(FDIO){
-                fd.getData(new DBHandler(this.getContext()),"FDI Outflows", startYear2, endYear2, country, this);
+            if (FDIO) {
+                fd.getData(new DBHandler(this.getContext()), "Fertilizer Production", startYear2, endYear2, country, this);
             }
 
         });
 
         show.setOnClickListener(view -> {
+
             CheckBox gdpBox = root.findViewById(R.id.reserves);
             GDP = gdpBox.isChecked();
-            CheckBox gniBox = root.findViewById(R.id.gni);
+            CheckBox gniBox = root.findViewById(R.id.total_debt);
             FDII = gniBox.isChecked();
-            CheckBox totalBox = root.findViewById(R.id.total_debt);
+            CheckBox totalBox = root.findViewById(R.id.gni_curr);
             FDIO = totalBox.isChecked();
 
-            graph.removeAllSeries();
-
-            if(GDP){
-                fd.getData(new DBHandler(this.getContext()),"GDP", startYear, endYear, country, this);
+            if (gdpBox.isChecked()) {//first box
+                fd.getData(new DBHandler(this.getContext()), "Contribution To GDP", startYear, endYear, country, this);
             }
 
-            if(FDII){
-                fd.getData(new DBHandler(this.getContext()),"FDI Inflows", startYear, endYear, country, this);
+            if (gniBox.isChecked()) {//second
+                fd.getData(new DBHandler(this.getContext()), "Fertilizers", startYear, endYear, country, this);
             }
 
-            if(FDIO){
-                fd.getData(new DBHandler(this.getContext()),"FDI Outflows", startYear, endYear, country, this);
+            if (totalBox.isChecked()) {//third box
+                fd.getData(new DBHandler(this.getContext()), "Fertilizer Production", startYear, endYear, country, this);
             }
 
             formLayout.setVisibility(View.INVISIBLE);
             chartLayout.setVisibility(View.VISIBLE);
             annLayout.setVisibility(View.INVISIBLE);
 
-            Button ann = root.findViewById(R.id.mac_ann);
+            Button ann = root.findViewById(R.id.agri_ann);
             if (HomeFragment.actor.equals(Constants.MAC_ECC)) {
                 ann.setVisibility(View.VISIBLE);
             } else {
@@ -153,19 +140,19 @@ public class DashboardFragment extends Fragment implements DataListener {
         });
 
         AnnotationDBHandler ad = new AnnotationDBHandler(this.getContext());
-        Button ann = root.findViewById(R.id.mac_ann);
+        Button ann = root.findViewById(R.id.agri_ann);
         ann.setOnClickListener(v -> {
             formLayout.setVisibility(View.INVISIBLE);
             chartLayout.setVisibility(View.INVISIBLE);
             annLayout.setVisibility(View.VISIBLE);
             refreshTable(root, ad);
-            // Add code to pull annotations here
         });
 
-        Button annSub = root.findViewById(R.id.mac_ann_submit);
+        Button annSub = root.findViewById(R.id.agri_ann_submit);
         annSub.setOnClickListener(v -> {
-            EditText ann_input = root.findViewById(R.id.mac_ann_text);
-            ad.addNewData("Macro Annotation", ann_input.getText().toString());
+            // Add code to submit an annotation here
+            EditText ann_input = root.findViewById(R.id.agri_ann_text);
+            ad.addNewData("Agriculture Annotation", ann_input.getText().toString());
             ann_input.setText("");
             refreshTable(root, ad);
         });
@@ -174,7 +161,7 @@ public class DashboardFragment extends Fragment implements DataListener {
     }
 
     private void refreshTable(View root, AnnotationDBHandler ad) {
-        TableLayout table = root.findViewById(R.id.mac_ann_table);
+        TableLayout table = root.findViewById(R.id.agri_ann_table);
         int childCount = table.getChildCount();
 
         // Remove all rows except the first one
@@ -188,13 +175,13 @@ public class DashboardFragment extends Fragment implements DataListener {
         for (int i = 0; i < annList.size(); i++) {
             Annotation annObj = annList.get(i);
             tr_head[i] = new TableRow(this.getContext());
-            tr_head[i].setId(i+1);
+            tr_head[i].setId(i + 1);
             tr_head[i].setBackgroundColor(Color.GRAY);
             tr_head[i].setLayoutParams(new TableLayout.LayoutParams(
                     TableLayout.LayoutParams.MATCH_PARENT,
                     TableLayout.LayoutParams.WRAP_CONTENT));
             textArray[i] = new TextView(this.getContext());
-            textArray[i].setId(i+111);
+            textArray[i].setId(i + 111);
             textArray[i].setText(annObj.getBody());
             textArray[i].setTextColor(Color.WHITE);
             textArray[i].setPadding(5, 5, 5, 5);
@@ -206,7 +193,6 @@ public class DashboardFragment extends Fragment implements DataListener {
 
         }
     }
-
 
     @Override
     public void onDestroyView() {
@@ -223,11 +209,12 @@ public class DashboardFragment extends Fragment implements DataListener {
         Collections.reverse(dataList);
         DataPoint[] myData = new DataPoint[dataList.size()];
         for (int i = 0; i < dataList.size(); i++) {
-                myData[i] = new DataPoint(Integer.parseInt(dataList.get(i).getYear()), dataList.get(i).getData());
+            myData[i] = new DataPoint(Integer.parseInt(dataList.get(i).getYear()), dataList.get(i).getData());
 
         }
 
         LineGraphSeries<DataPoint> series = new LineGraphSeries<>(myData);
+        //series.setColor(Color.GREEN);
         graph.addSeries(series);
 
     }

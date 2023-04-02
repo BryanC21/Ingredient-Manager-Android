@@ -1,19 +1,18 @@
-package com.sjsu.hackathon.merfstsdb.ui.home;
+package com.sjsu.hackathon.ingredient_manager.ui.home;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.sjsu.hackathon.merfstsdb.R;
-import com.sjsu.hackathon.merfstsdb.databinding.FragmentHomeBinding;
-import com.sjsu.hackathon.merfstsdb.ui.Constants;
+import com.sjsu.hackathon.ingredient_manager.R;
+import com.sjsu.hackathon.ingredient_manager.databinding.FragmentHomeBinding;
+import com.sjsu.hackathon.ingredient_manager.ui.Constants;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
     public static String actor = Constants.GOVT_OFFICER;

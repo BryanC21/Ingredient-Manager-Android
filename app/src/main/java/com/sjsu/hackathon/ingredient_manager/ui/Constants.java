@@ -1,4 +1,4 @@
-package com.sjsu.hackathon.merfstsdb.ui;
+package com.sjsu.hackathon.ingredient_manager.ui;
 
 public class Constants {
     public static final String GOVT_OFFICER = "GOVT_OFFICER";
