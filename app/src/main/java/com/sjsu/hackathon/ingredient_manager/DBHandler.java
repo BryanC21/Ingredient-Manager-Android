@@ -2,121 +2,144 @@ package com.sjsu.hackathon.ingredient_manager;
 
 
 import android.content.ContentValues;
-import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
+import androidx.annotation.NonNull;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.sjsu.hackathon.ingredient_manager.models.Category;
+import com.sjsu.hackathon.ingredient_manager.models.Ingredient;
+import com.sjsu.hackathon.ingredient_manager.models.Location;
+import com.sjsu.hackathon.ingredient_manager.models.Unit;
+
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
-public class DBHandler extends SQLiteOpenHelper {
+import okhttp3.internal.cache.DiskLruCache;
 
-    // creating a constant variables for our database.
-    // below variable is for our database name.
-    private static final String DB_NAME = "hackathon";
+public class DBHandler {
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference dbRef = database.getReference("dev");
+    public void addNewIngredient(String name, double quantity, String img, String notes,
+                                 Date expirationTime, Date createTime, String locationId,
+                                 String categoryId, String unitId) {
+        DatabaseReference ingredientList = dbRef.child("ingredients").push();
 
-    // below int is our database version
-    private static final int DB_VERSION = 3;
-
-    // below variable is for our table name.
-    private static final String[] TABLE_NAMES = {"gdp", "fdi_inflows", "fdi_outflows", "ie_flow",
-            "con_gdp", "credit", "fertilizer", "fertilizer_prod", "reserves", "gni", "debt",
-            "gni_cur"};
-
-    private static final String ID_COL = "id";
-
-    // below variable is for our id column.
-    private static final String YEAR_COL = "year";
-
-    // below variable is for our course name column
-    private static final String DATA_COL = "data";
-
-    // below variable id for our course duration column.
-    private static final String COUNTRY_COL = "country";
-
-    // creating a constructor for our database handler.
-    public DBHandler(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+        Ingredient ingredient = new Ingredient(name, quantity, img, notes,
+                expirationTime, createTime, locationId,
+                categoryId, unitId);
+        ingredientList.setValue(ingredient);
+        System.out.println("Ingredient added");
     }
 
-    // below method is for creating a database by running a sqlite query
-    @Override
-    public void onCreate(SQLiteDatabase db) {
-        // on below line we are creating
-        // an sqlite query and we are
-        // setting our column names
-        // along with their data types.
-        for (String tableName : TABLE_NAMES) {
-            String query = "CREATE TABLE " + tableName + " ("
-                    + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                    + YEAR_COL + " TEXT, "
-                    + DATA_COL + " DOUBLE,"
-                    + COUNTRY_COL + " TEXT)";
-            // at last we are calling a exec sql
-            // method to execute above sql query
-            db.execSQL(query);
-        }
+    public void addNewLocation(String name) {
+        DatabaseReference locationList = dbRef.child("locations").push();
+
+        Location location = new Location(name);
+        locationList.setValue(location);
+        System.out.println("Location added");
     }
 
-    // this method is use to add new course to our sqlite database.
-    public void addNewData(String tableName, String year, double data, String country) {
-        // on below line we are creating a variable for
-        // our sqlite database and calling writable method
-        // as we are writing data in our database.
-        SQLiteDatabase db = this.getWritableDatabase();
+    public void addNewCategory(String name) {
+        DatabaseReference categoryList = dbRef.child("categories").push();
 
-        // on below line we are creating a
-        // variable for content values.
-        ContentValues values = new ContentValues();
+        Category category = new Category(name);
+        categoryList.setValue(category);
+        System.out.println("Category added");
+    }
 
-        // on below line we are passing all values
-        // along with its key and value pair.
-        values.put(YEAR_COL, year);
-        values.put(DATA_COL, data);
-        values.put(COUNTRY_COL, country);
+    public void addNewUnit(String name) {
+        DatabaseReference unitList = dbRef.child("units").push();
 
-        // after adding all values we are passing
-        // content values to our table.
-        db.insert(tableName, null, values);
-
-        // at last we are closing our
-        // database after adding database.
-        db.close();
+        Unit unit = new Unit(name);
+        unitList.setValue(unit);
+        System.out.println("Unit added");
     }
 
     public void removeData(String tableName, String startYear, String endYear) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(tableName, "year >= ? and year <= ?", new String[]{startYear, endYear});
     }
 
-    public ArrayList<Data> getData(String tableName, String startYear, String endYear, String country) {
-        ArrayList<Data> dataList = new ArrayList<>();
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = db.rawQuery("SELCT * FROM " + tableName + " WHERE year >= ? AND year <= ? ",
-                new String[]{startYear, endYear});
-        if (cursor.moveToFirst()) {
-            do {
-                // on below line we are adding the data from
-                // cursor to our array list.
-                dataList.add(new Data(
-                        cursor.getString(1),
-                        cursor.getLong(2),
-                        cursor.getString(3)));
-            } while (cursor.moveToNext());
-            // moving our cursor to next.
-        }
-        // at last closing our cursor
-        // and returning our array list.
-        cursor.close();
-        return dataList;
+    public void getIngredients(DataListener listener) {
+        ArrayList<Ingredient> list = new ArrayList<>();
+        dbRef.child("ingredients").get().addOnCompleteListener(
+            new OnCompleteListener<DataSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DataSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        for (DataSnapshot ingredientSnapshot : task.getResult().getChildren()) {
+                            Ingredient ingredient = ingredientSnapshot.getValue(Ingredient.class);
+                            ingredient.setId(ingredientSnapshot.getKey());
+                            list.add(ingredient);
+                        }
+                        listener.onIngredientDataFinish(list);
+                    } else {
+                        listener.onDataFail("No data");
+                    }
+                }
+            });
     }
 
-    @Override
-    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // this method is called to check if the table exists already.
-        for (String tableName : TABLE_NAMES) {
-            db.execSQL("DROP TABLE IF EXISTS " + tableName);
-            onCreate(db);
-        }
+    public void getLocations(DataListener listener) {
+        ArrayList<Location> list = new ArrayList<>();
+        dbRef.child("locations").get().addOnCompleteListener(
+                new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DataSnapshot locationSnapshot : task.getResult().getChildren()) {
+                                Location location = locationSnapshot.getValue(Location.class);
+                                location.setId(locationSnapshot.getKey());
+                                list.add(location);
+                            }
+                            listener.onLocationDataFinish(list);
+                        } else {
+                            listener.onDataFail("No data");
+                        }
+                    }
+                });
+    }
+
+    public void getCategories(DataListener listener) {
+        ArrayList<Category> list = new ArrayList<>();
+        dbRef.child("categories").get().addOnCompleteListener(
+                new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DataSnapshot categorySnapshot : task.getResult().getChildren()) {
+                                Category category = categorySnapshot.getValue(Category.class);
+                                category.setId(categorySnapshot.getKey());
+                                list.add(category);
+                            }
+                            listener.onCategoryDataFinish(list);
+                        } else {
+                            listener.onDataFail("No data");
+                        }
+                    }
+                });
+    }
+
+    public void getUnits(DataListener listener) {
+        ArrayList<Unit> list = new ArrayList<>();
+        dbRef.child("units").get().addOnCompleteListener(
+                new OnCompleteListener<DataSnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<DataSnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (DataSnapshot unitSnapshot : task.getResult().getChildren()) {
+                                Unit unit = unitSnapshot.getValue(Unit.class);
+                                unit.setId(unitSnapshot.getKey());
+                                list.add(unit);
+                            }
+                            listener.onUnitDataFinish(list);
+                        } else {
+                            listener.onDataFail("No data");
+                        }
+                    }
+                });
     }
 }

@@ -18,8 +18,14 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.sjsu.hackathon.ingredient_manager.databinding.ActivityMainBinding;
+import com.sjsu.hackathon.ingredient_manager.models.Category;
+import com.sjsu.hackathon.ingredient_manager.models.Ingredient;
+import com.sjsu.hackathon.ingredient_manager.models.Location;
+import com.sjsu.hackathon.ingredient_manager.models.Unit;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity implements DataListener {
     private ActivityMainBinding binding;
@@ -31,7 +37,7 @@ public class MainActivity extends AppCompatActivity implements DataListener {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FetchData fd = new FetchData();
+//        FetchData fd = new FetchData();
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -46,22 +52,22 @@ public class MainActivity extends AppCompatActivity implements DataListener {
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fd.allowedCountries);
-        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
-        Spinner spinner = findViewById(R.id.spinner);
-        spinner.setAdapter(arrayAdapter);
-        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                                              @Override
-                                              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                                                  String cn = parent.getItemAtPosition(position).toString();
-                                                  System.out.println(cn + " selected");
-                                                  country = cn;
-                                              }
-
-                                              @Override
-                                              public void onNothingSelected(AdapterView<?> parent) {
-                                              }
-                                          });
+//        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, fd.allowedCountries);
+//        arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_item);
+//        Spinner spinner = findViewById(R.id.spinner);
+//        spinner.setAdapter(arrayAdapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//                                              @Override
+//                                              public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                                                  String cn = parent.getItemAtPosition(position).toString();
+//                                                  System.out.println(cn + " selected");
+//                                                  country = cn;
+//                                              }
+//
+//                                              @Override
+//                                              public void onNothingSelected(AdapterView<?> parent) {
+//                                              }
+//                                          });
 //        fd.getData(new DBHandler(this),"FDI Inflows", "1980", "2021", "US", this);
         AnnotationDBHandler ad = new AnnotationDBHandler(this);
 //        ad.addNewData("title5", "body5");
@@ -69,10 +75,53 @@ public class MainActivity extends AppCompatActivity implements DataListener {
 //        System.out.println(ad.getDataById(1));
 //        System.out.println(ad.getDataById(2));
 //        System.out.println(ad.getDataById(3));
+
+        // Add ingredient example
+        DBHandler dbHandler = new DBHandler();
+//        dbHandler.addNewUnit("Bag");
+//        dbHandler.addNewUnit("Gallon");
+//        dbHandler.addNewUnit("Pound");
+//        dbHandler.addNewCategory("Fruit");
+//        dbHandler.addNewCategory("Milk product");
+//        dbHandler.addNewCategory("Meat");
+//        dbHandler.addNewCategory("Seafood");
+//        dbHandler.addNewCategory("Vegetable");
+//        dbHandler.addNewLocation("Fridge");
+//        dbHandler.addNewLocation("Counter");
+//        dbHandler.addNewLocation("Cabinet");
+//        Date date = new java.util.Date();
+//        dbHandler.addNewIngredient("Apple", 1.0, "", "", date, date,
+//                "-NS8eopaXJh9mv5HI-Hs", "-NS8eopYaRGPiJGW9w32",
+//                "-NS8eopXUPEzalMGVS9v");
+        dbHandler.getUnits(this);
+        dbHandler.getLocations(this);
+        dbHandler.getCategories(this);
+        dbHandler.getIngredients(this);
     }
 
     @Override
-    public void onDataFinish(ArrayList<Data> dataList) {
+    public void onIngredientDataFinish(ArrayList<Ingredient> dataList) {
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(dataList);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    @Override
+    public void onLocationDataFinish(ArrayList<Location> dataList) {
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(dataList);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    @Override
+    public void onUnitDataFinish(ArrayList<Unit> dataList) {
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+        System.out.println(dataList);
+        System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
+    }
+
+    @Override
+    public void onCategoryDataFinish(ArrayList<Category> dataList) {
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");
         System.out.println(dataList);
         System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++");

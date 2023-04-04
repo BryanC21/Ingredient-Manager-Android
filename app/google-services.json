@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "214657325301",
+    "firebase_url": "https://ingredient-manager-default-rtdb.firebaseio.com",
+    "project_id": "ingredient-manager",
+    "storage_bucket": "ingredient-manager.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:214657325301:android:7b10ccea7d8814cb340dbc",
+        "android_client_info": {
+          "package_name": "com.sjsu.hackathon.ingredient_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "214657325301-mujqet2jtot24kio2nnfr4jf4sd902gs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBky0d567whQ0ICruiV2YogEOQOPK6fAOQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "214657325301-aba8oat6pp6cejepc7joqie42cdb3rgf.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "214657325301-8h2v1hnb00ces6ed320fpn5cq4965gni.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.threeguys.Ingredient-Manager"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
