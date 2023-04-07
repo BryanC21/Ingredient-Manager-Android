@@ -23,4 +23,9 @@
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
+    <fragment
+        android:id="@+id/navigation_new"
+        android:name="com.sjsu.hackathon.ingredient_manager.NewFragment"
+        android:label="HERE"
+        ></fragment>
 </navigation>
