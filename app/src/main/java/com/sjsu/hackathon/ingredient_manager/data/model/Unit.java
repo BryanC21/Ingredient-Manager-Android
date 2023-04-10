@@ -1,4 +1,4 @@
-package com.sjsu.hackathon.ingredient_manager.models;
+package com.sjsu.hackathon.ingredient_manager.data.model;
 
 public class Unit {
     private String id;

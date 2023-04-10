@@ -1,13 +1,13 @@
-package com.sjsu.hackathon.ingredient_manager.models;
+package com.sjsu.hackathon.ingredient_manager.data.model;
 
-public class Category {
+public class Location {
     private String id;
     private String name;
 
-    public Category() {
+    public Location() {
     }
 
-    public Category(String name) {
+    public Location(String name) {
         this.name = name;
     }
 

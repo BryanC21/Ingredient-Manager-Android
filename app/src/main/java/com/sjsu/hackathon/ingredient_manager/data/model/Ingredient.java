@@ -1,4 +1,4 @@
-package com.sjsu.hackathon.ingredient_manager.models;
+package com.sjsu.hackathon.ingredient_manager.data.model;
 
 import java.sql.Time;
 import java.util.Date;
@@ -15,10 +15,13 @@ public class Ingredient {
     private String categoryId;
     private String unitId;
 
+    private String userId;
+
     public Ingredient() {}
 
     public Ingredient(String name, double quantity, String img, String notes, Date expirationTime,
-                      Date createTime, String locationId, String categoryId, String unitId) {
+                      Date createTime, String locationId, String categoryId, String unitId,
+                      String userId) {
         this.name = name;
         this.quantity = quantity;
         this.locationId = locationId;
@@ -28,21 +31,9 @@ public class Ingredient {
         this.notes = notes;
         this.categoryId = categoryId;
         this.unitId = unitId;
+        this.userId = userId;
     }
 
-//    public Ingredient(String id, String name, double quantity, int locationId, Timestamp expirationTime,
-//                      Timestamp createTime, String img, String notes, int categoryId, int unitId) {
-//        this.id = id;
-//        this.name = name;
-//        this.quantity = quantity;
-//        this.locationId = locationId;
-//        this.expirationTime = expirationTime;
-//        this.createTime = createTime;
-//        this.img = img;
-//        this.notes = notes;
-//        this.categoryId = categoryId;
-//        this.unitId = unitId;
-//    }
     public String getId() {
         return id;
     }
@@ -121,6 +112,14 @@ public class Ingredient {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     @Override
