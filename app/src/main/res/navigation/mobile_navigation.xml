@@ -26,6 +26,7 @@
     <fragment
         android:id="@+id/navigation_new"
         android:name="com.sjsu.hackathon.ingredient_manager.NewFragment"
-        android:label="HERE"
+        android:label=""
+        tools:layout="@layout/fragment_new"
         ></fragment>
 </navigation>
