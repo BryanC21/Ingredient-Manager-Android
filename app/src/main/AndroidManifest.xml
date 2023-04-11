@@ -20,7 +20,7 @@
         android:theme="@style/Theme.ingredient_manager"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".FirebaseUIActivity"
             android:exported="true"
             android:label="@string/title_activity_main">
             <intent-filter>
@@ -28,6 +28,17 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".MainActivity"
+            android:label="TrueMainActivity"
+            android:exported="true">
+            <!-- Optionally define intent filters for the activity -->
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+
     </application>
     <uses-permission android:name="android.permission.INTERNET" />
 

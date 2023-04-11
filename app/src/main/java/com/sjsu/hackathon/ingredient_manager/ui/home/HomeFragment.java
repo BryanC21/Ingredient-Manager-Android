@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.sjsu.hackathon.ingredient_manager.databinding.FragmentHomeBinding;
 
 public class HomeFragment extends Fragment {
@@ -25,7 +26,9 @@ public class HomeFragment extends Fragment {
         View root = binding.getRoot();
 
         final TextView textView = binding.textHome;
-        homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        String x = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        textView.setText(x);
+        //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
         return root;
     }
 
