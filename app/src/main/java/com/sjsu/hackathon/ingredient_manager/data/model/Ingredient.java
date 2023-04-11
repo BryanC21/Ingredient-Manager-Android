@@ -15,13 +15,10 @@ public class Ingredient {
     private String categoryId;
     private String unitId;
 
-    private String userId;
-
     public Ingredient() {}
 
     public Ingredient(String name, double quantity, String img, String notes, Date expirationTime,
-                      Date createTime, String locationId, String categoryId, String unitId,
-                      String userId) {
+                      Date createTime, String locationId, String categoryId, String unitId) {
         this.name = name;
         this.quantity = quantity;
         this.locationId = locationId;
@@ -31,7 +28,6 @@ public class Ingredient {
         this.notes = notes;
         this.categoryId = categoryId;
         this.unitId = unitId;
-        this.userId = userId;
     }
 
     public String getId() {
@@ -112,14 +108,6 @@ public class Ingredient {
 
     public void setUnitId(String unitId) {
         this.unitId = unitId;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
     }
 
     @Override

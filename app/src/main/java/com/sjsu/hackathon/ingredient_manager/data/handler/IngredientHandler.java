@@ -1,5 +1,6 @@
 package com.sjsu.hackathon.ingredient_manager.data.handler;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -10,24 +11,27 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class IngredientHandler {
-    private final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("dev")
-            .child("ingredients");
+    private final DatabaseReference dbRef;
 
     private final IngredientListener listener;
 
     public IngredientHandler(IngredientListener listener) {
+        UserHandler userHandler = new UserHandler();
+        dbRef = FirebaseDatabase.getInstance().getReference("dev")
+                .child(userHandler.getId())
+                .child("ingredients");
         this.listener = listener;
     }
 
     public void add(String name, double quantity,
                                  String img, String notes,
                                  Date expirationTime, Date createTime, String locationId,
-                                 String categoryId, String unitId, String userId) {
+                                 String categoryId, String unitId) {
         DatabaseReference list = dbRef.push();
 
         Ingredient data = new Ingredient(name, quantity, img, notes,
                 expirationTime, createTime, locationId,
-                categoryId, unitId, userId);
+                categoryId, unitId);
         list.setValue(data).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
@@ -72,10 +76,10 @@ public class IngredientHandler {
     public void edit(String id, String name,
                                    double quantity, String img, String notes,
                                    Date expirationTime, Date createTime, String locationId,
-                                   String categoryId, String unitId, String userId) {
+                                   String categoryId, String unitId) {
         Ingredient data = new Ingredient(name, quantity, img, notes,
                 expirationTime, createTime, locationId,
-                categoryId, unitId, userId);
+                categoryId, unitId);
         dbRef.child(id).setValue(data).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {

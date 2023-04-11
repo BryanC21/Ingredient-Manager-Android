@@ -1,5 +1,6 @@
 package com.sjsu.hackathon.ingredient_manager.data.handler;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -11,12 +12,15 @@ import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
 import java.util.ArrayList;
 
 public class LocationHandler {
-    private final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("dev")
-            .child("locations");
+    private final DatabaseReference dbRef;
 
     private final LocationListener listener;
 
     public LocationHandler(LocationListener listener) {
+        UserHandler userHandler = new UserHandler();
+        dbRef = FirebaseDatabase.getInstance().getReference("dev")
+                .child(userHandler.getId())
+                .child("locations");
         this.listener = listener;
     }
 

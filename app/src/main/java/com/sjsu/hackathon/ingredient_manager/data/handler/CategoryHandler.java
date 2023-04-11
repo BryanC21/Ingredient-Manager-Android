@@ -1,5 +1,6 @@
 package com.sjsu.hackathon.ingredient_manager.data.handler;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -9,12 +10,15 @@ import com.sjsu.hackathon.ingredient_manager.data.model.Category;
 import java.util.ArrayList;
 
 public class CategoryHandler {
-    private final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("dev")
-            .child("categories");
+    private final DatabaseReference dbRef;
 
     private final CategoryListener listener;
 
     public CategoryHandler(CategoryListener listener) {
+        UserHandler userHandler = new UserHandler();
+        dbRef = FirebaseDatabase.getInstance().getReference("dev")
+                .child(userHandler.getId())
+                .child("categories");
         this.listener = listener;
     }
 

@@ -9,6 +9,7 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
 import com.sjsu.hackathon.ingredient_manager.data.listener.IngredientListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Ingredient;
 import com.sjsu.hackathon.ingredient_manager.databinding.ActivityMainBinding;
@@ -36,11 +37,12 @@ public class MainActivity extends AppCompatActivity implements IngredientListene
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(binding.navView, navController);
 
-        //IngredientHandler dbHandler = new IngredientHandler(this);
+        IngredientHandler dbHandler = new IngredientHandler(this);
 //        Date date = new Date();
 //        dbHandler.addNewIngredient("Tomato", 1, "img1", "notes1", date, date, "-NS8eopaXJh9mv5HI-Hs",
 //                "-NS8eopYaRGPiJGW9w32", "-NS8eopO_GxzgPnsPGBc", "YqhB12pGizP4409dKZ7Fk8i0fNv1");
-        //dbHandler.get("-NSgVZpL__r3x_Euk9vt");
+        dbHandler.getAll();
+
     }
 
     @Override
@@ -55,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements IngredientListene
 
     @Override
     public void onGetAllFinish(ArrayList<Ingredient> dataList) {
-
+        System.out.println(dataList);
     }
 
     @Override
