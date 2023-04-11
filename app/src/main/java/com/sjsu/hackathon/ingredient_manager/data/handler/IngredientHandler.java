@@ -10,24 +10,27 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class IngredientHandler {
-    private final DatabaseReference dbRef = FirebaseDatabase.getInstance().getReference("dev")
-            .child("ingredients");
+    private final DatabaseReference dbRef;
 
     private final IngredientListener listener;
 
     public IngredientHandler(IngredientListener listener) {
         this.listener = listener;
+        UserHandler userHandler = new UserHandler();
+        this.dbRef = FirebaseDatabase.getInstance().getReference("dev")
+                .child(userHandler.getId())
+                .child("ingredients");
     }
 
     public void add(String name, double quantity,
                                  String img, String notes,
                                  Date expirationTime, Date createTime, String locationId,
-                                 String categoryId, String unitId, String userId) {
+                                 String categoryId, String unitId) {
         DatabaseReference list = dbRef.push();
 
         Ingredient data = new Ingredient(name, quantity, img, notes,
                 expirationTime, createTime, locationId,
-                categoryId, unitId, userId);
+                categoryId, unitId);
         list.setValue(data).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
@@ -72,10 +75,10 @@ public class IngredientHandler {
     public void edit(String id, String name,
                                    double quantity, String img, String notes,
                                    Date expirationTime, Date createTime, String locationId,
-                                   String categoryId, String unitId, String userId) {
+                                   String categoryId, String unitId) {
         Ingredient data = new Ingredient(name, quantity, img, notes,
                 expirationTime, createTime, locationId,
-                categoryId, unitId, userId);
+                categoryId, unitId);
         dbRef.child(id).setValue(data).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
