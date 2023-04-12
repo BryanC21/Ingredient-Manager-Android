@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -25,10 +26,14 @@ public class HomeFragment extends Fragment {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
 
-        final TextView textView = binding.textHome;
-        String x = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        textView.setText(x);
-        //homeViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
+        Bundle b = requireActivity().getIntent().getExtras();
+        String text = b.getString("label");
+
+        if (text != null && text.length() != 0) {
+            EditText e = binding.itemName;
+            e.setText(text);
+        }
+
         return root;
     }
 

@@ -1,6 +1,9 @@
 package com.sjsu.hackathon.ingredient_manager;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,5 +66,10 @@ public class MainActivity extends AppCompatActivity implements IngredientListene
     @Override
     public void onGetFinish(Ingredient data) {
         System.out.println(data);
+    }
+
+    public void openCamera(View view) {
+        Intent intent = new Intent(this, CameraActivity.class);
+        startActivity(intent);
     }
 }
