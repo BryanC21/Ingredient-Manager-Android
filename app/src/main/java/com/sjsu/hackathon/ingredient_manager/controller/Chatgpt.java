@@ -8,6 +8,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
+import com.sjsu.hackathon.ingredient_manager.R;
 import com.sjsu.hackathon.ingredient_manager.data.listener.ChatgptListener;
 
 import org.json.JSONArray;
@@ -19,7 +20,7 @@ import java.util.Map;
 
 public class Chatgpt {
     private static final String BASE_URL = "https://api.openai.com/v1/chat/completions";
-    private static final String API_KEY = "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";
+    private static final String API_KEY = String.valueOf(R.string.OPENAI_API_KEY);
     private static final String MODEL_ID = "gpt-3.5-turbo";
 
     private final RequestQueue requestQueue;

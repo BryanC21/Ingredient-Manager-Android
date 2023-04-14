@@ -17,8 +17,8 @@ public class RecipeController implements ChatgptListener {
 
     public void getRecipe(ArrayList<Ingredient> list, int number) {
         Chatgpt chatgpt = new Chatgpt(this.context);
-        String message = "Create 1 JSON list containing " + String.valueOf(number) +
-                " recipes in JSON format [{'name', 'servings', 'ingredients':[{'name', 'quantity', " +
+        String message = "Create only 1 JSON list containing " + String.valueOf(number) +
+                " recipes in this format [{'name', 'servings', 'ingredients':[{'name', 'quantity', " +
                 "'preparation'}], 'instructions': []}] using ";
         for (Ingredient ingredient : list) {
             message += ingredient.getName() + ", ";

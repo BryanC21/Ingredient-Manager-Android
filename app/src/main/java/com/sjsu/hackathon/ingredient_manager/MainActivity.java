@@ -47,16 +47,16 @@ public class MainActivity extends AppCompatActivity implements IngredientListene
 //        dbHandler.addNewIngredient("Tomato", 1, "img1", "notes1", date, date, "-NS8eopaXJh9mv5HI-Hs",
 //                "-NS8eopYaRGPiJGW9w32", "-NS8eopO_GxzgPnsPGBc", "YqhB12pGizP4409dKZ7Fk8i0fNv1");
 //        dbHandler.getAll();
-//        RecipeController recipeController = new RecipeController(this.getBaseContext());
-//        Ingredient ingredient1 = new Ingredient("tomato", 2, "123", "123", null, null, "123", "123", "123");
-//        Ingredient ingredient2 = new Ingredient("potato", 2, "123", "123", null, null, "123", "123", "123");
-//        Ingredient ingredient3 = new Ingredient("garlic", 2, "123", "123", null, null, "123", "123", "123");
-//
-//        ArrayList<Ingredient> list = new ArrayList<>();
-//        list.add(ingredient1);
-//        list.add(ingredient2);
-//        list.add(ingredient3);
-//        recipeController.getRecipe(list, 2);
+        RecipeController recipeController = new RecipeController(this.getBaseContext());
+        Ingredient ingredient1 = new Ingredient("tomato", 2, "123", "123", null, null, "123", "123", "123");
+        Ingredient ingredient2 = new Ingredient("potato", 2, "123", "123", null, null, "123", "123", "123");
+        Ingredient ingredient3 = new Ingredient("garlic", 2, "123", "123", null, null, "123", "123", "123");
+
+        ArrayList<Ingredient> list = new ArrayList<>();
+        list.add(ingredient1);
+        list.add(ingredient2);
+        list.add(ingredient3);
+        recipeController.getRecipe(list, 2);
     }
 
     @Override
