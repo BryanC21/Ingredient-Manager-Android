@@ -21,6 +21,9 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ProgressBar;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.amazonaws.ClientConfiguration;
@@ -60,6 +63,7 @@ public class CameraActivity extends AppCompatActivity {
         setContentView(R.layout.activity_camera);
 
         mPreviewView = findViewById(R.id.viewFinder);
+        mPreviewView.setVisibility(View.VISIBLE);
         captureImage = findViewById(R.id.image_capture_button);
         if (allPermissionsGranted()) {
             startCamera(); //start camera if permission has been granted by user
@@ -106,10 +110,12 @@ public class CameraActivity extends AppCompatActivity {
                 .build();
 
         preview.setSurfaceProvider(mPreviewView.getSurfaceProvider());
-
         Camera camera = cameraProvider.bindToLifecycle((LifecycleOwner) this, cameraSelector, preview, imageAnalysis, imageCapture);
-
         captureImage.setOnClickListener(v -> {
+            ProgressBar spinnerContainer = findViewById(R.id.spinner);
+            spinnerContainer.setVisibility(View.VISIBLE);
+            mPreviewView.setVisibility(View.GONE);
+
             imageCapture.takePicture(ContextCompat.getMainExecutor(this), new ImageCapture.OnImageCapturedCallback() {
                 @SuppressLint("UnsafeExperimentalUsageError")
                 @Override
@@ -152,6 +158,7 @@ public class CameraActivity extends AppCompatActivity {
                 @Override
                 public void onError(@NonNull final ImageCaptureException exception) {
                     exception.printStackTrace();
+                    spinnerContainer.setVisibility(View.GONE);
                 }
             });
         });
