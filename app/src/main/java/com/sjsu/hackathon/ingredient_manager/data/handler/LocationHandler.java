@@ -1,13 +1,10 @@
 package com.sjsu.hackathon.ingredient_manager.data.handler;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
-import com.sjsu.hackathon.ingredient_manager.data.listener.UnitListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Location;
-import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
 
 import java.util.ArrayList;
 

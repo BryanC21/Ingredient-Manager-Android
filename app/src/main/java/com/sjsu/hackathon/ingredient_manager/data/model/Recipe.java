@@ -46,4 +46,8 @@ public class Recipe {
     public void setInstructionList(ArrayList<String> instructionList) {
         this.instructionList = instructionList;
     }
+
+    public String toString() {
+        return "Recipe: " + name + " " + " " + servings;
+    }
 }

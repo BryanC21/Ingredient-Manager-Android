@@ -15,13 +15,18 @@ import androidx.navigation.ui.NavigationUI;
 import com.sjsu.hackathon.ingredient_manager.controller.Chatgpt;
 import com.sjsu.hackathon.ingredient_manager.controller.RecipeController;
 import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
+import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
 import com.sjsu.hackathon.ingredient_manager.data.listener.IngredientListener;
+import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
+import com.sjsu.hackathon.ingredient_manager.data.listener.RecipeListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Ingredient;
+import com.sjsu.hackathon.ingredient_manager.data.model.Location;
+import com.sjsu.hackathon.ingredient_manager.data.model.Recipe;
 import com.sjsu.hackathon.ingredient_manager.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements RecipeListener {
 
     private ActivityMainBinding binding;
 
@@ -47,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
 //        dbHandler.addNewIngredient("Tomato", 1, "img1", "notes1", date, date, "-NS8eopaXJh9mv5HI-Hs",
 //                "-NS8eopYaRGPiJGW9w32", "-NS8eopO_GxzgPnsPGBc", "YqhB12pGizP4409dKZ7Fk8i0fNv1");
 //        dbHandler.getAll();
-        RecipeController recipeController = new RecipeController(this.getBaseContext());
+        RecipeController recipeController = new RecipeController(this.getBaseContext(), this);
         Ingredient ingredient1 = new Ingredient("tomato", 2, "123", "123", null, null, "123", "123", "123");
         Ingredient ingredient2 = new Ingredient("potato", 2, "123", "123", null, null, "123", "123", "123");
         Ingredient ingredient3 = new Ingredient("garlic", 2, "123", "123", null, null, "123", "123", "123");
@@ -62,5 +67,20 @@ public class MainActivity extends AppCompatActivity {
     public void openCamera(View view) {
         Intent intent = new Intent(this, CameraActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onDataSuccess(String reason) {
+
+    }
+
+    @Override
+    public void onDataFail(String reason) {
+
+    }
+
+    @Override
+    public void onGetSuccess(ArrayList<Recipe> recipeList) {
+        System.out.println(recipeList);
     }
 }

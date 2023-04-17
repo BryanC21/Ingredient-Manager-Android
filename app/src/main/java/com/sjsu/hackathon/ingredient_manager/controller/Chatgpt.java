@@ -20,17 +20,20 @@ import java.util.Map;
 
 public class Chatgpt {
     private static final String BASE_URL = "https://api.openai.com/v1/chat/completions";
-    private static final String API_KEY = String.valueOf(R.string.OPENAI_API_KEY);
     private static final String MODEL_ID = "gpt-3.5-turbo";
 
     private final RequestQueue requestQueue;
 
+    private final Context context;
+
     public Chatgpt(Context context) {
+        this.context = context;
         requestQueue = Volley.newRequestQueue(context);
     }
 
     public void sendMessage(String message, final ChatgptListener callback) {
         String url = BASE_URL;
+        String api_key = this.context.getResources().getString(R.string.OPENAI_API_KEY);
 
         JSONObject requestBody = new JSONObject();
         JSONArray messages = new JSONArray();
@@ -44,7 +47,6 @@ public class Chatgpt {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        System.out.println(requestBody);
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.POST,
                 url,
@@ -59,7 +61,8 @@ public class Chatgpt {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + API_KEY);
+//                headers.put("Authorization", "Bearer " + R.string.OPENAI_API_KEY);
+                headers.put("Authorization", "Bearer " + api_key);
                 headers.put("Content-Type", "application/json");
                 return headers;
             }
