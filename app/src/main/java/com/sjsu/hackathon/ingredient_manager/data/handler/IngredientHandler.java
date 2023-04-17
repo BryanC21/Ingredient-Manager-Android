@@ -1,6 +1,5 @@
 package com.sjsu.hackathon.ingredient_manager.data.handler;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -24,9 +23,9 @@ public class IngredientHandler {
     }
 
     public void add(String name, double quantity,
-                                 String img, String notes,
-                                 Date expirationTime, Date createTime, String locationId,
-                                 String categoryId, String unitId) {
+                    String img, String notes,
+                    Date expirationTime, Date createTime, String locationId,
+                    String categoryId, String unitId, String yqhB12pGizP4409dKZ7Fk8i0fNv1) {
         DatabaseReference list = dbRef.push();
 
         Ingredient data = new Ingredient(name, quantity, img, notes,

@@ -21,7 +21,7 @@ import com.sjsu.hackathon.ingredient_manager.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements IngredientListener {
+public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
 
@@ -57,26 +57,6 @@ public class MainActivity extends AppCompatActivity implements IngredientListene
         list.add(ingredient2);
         list.add(ingredient3);
         recipeController.getRecipe(list, 2);
-    }
-
-    @Override
-    public void onDataSuccess(String reason) {
-
-    }
-
-    @Override
-    public void onDataFail(String reason) {
-
-    }
-
-    @Override
-    public void onGetAllFinish(ArrayList<Ingredient> dataList) {
-        System.out.println(dataList);
-    }
-
-    @Override
-    public void onGetFinish(Ingredient data) {
-        System.out.println(data);
     }
 
     public void openCamera(View view) {
