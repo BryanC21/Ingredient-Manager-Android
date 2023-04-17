@@ -20,16 +20,23 @@ public class RecipeController implements ChatgptListener {
 
     private Context context;
     private RecipeListener recipeListener;
+    private ArrayList<Ingredient> list;
+    private int number;
+    private int retry;
 
     public RecipeController(Context context, RecipeListener recipeListener) {
         this.context = context;
         this.recipeListener = recipeListener;
+        this.retry = 3;
     }
 
     public void getRecipe(ArrayList<Ingredient> list, int number) {
         Chatgpt chatgpt = new Chatgpt(this.context);
-        String message = "Create a recipe list in JSONArray format containing " + String.valueOf(number) +
-                " recipes in this format {'name', 'servings', 'ingredients':[{'name', 'quantity', " +
+        this.list = list;
+        this.number = number;
+        String message = "Create a recipe list in JSONArray format containing " +
+                String.valueOf(number) + " recipes in this format {'name', 'servings', " +
+                "'ingredients':[{'name', 'quantity', " +
                 "'preparation'}], 'instructions': []} using ";
         for (Ingredient ingredient : list) {
             message += ingredient.getName() + ", ";
@@ -70,9 +77,15 @@ public class RecipeController implements ChatgptListener {
                 recipeList.add(recipe);
             }
             recipeListener.onGetSuccess(recipeList);
-        } catch (JSONException error) {
-            recipeListener.onDataFail(error.getMessage());
+        } catch (JSONException | ArrayIndexOutOfBoundsException error) {
             Log.e("Recipe Json Parse Error", error.getMessage());
+
+            if (retry-- > 0) {
+                Log.e("Retrying Chatgpt", "Retry Left: " + Integer.toString(retry));
+                getRecipe(list, number);
+            } else {
+                recipeListener.onDataFail(error.getMessage());
+            }
         }
     }
 

@@ -8,7 +8,8 @@ public class Recipe {
     private ArrayList<RecipeIngredient> ingredientList;
     private ArrayList<String> instructionList;
 
-    public Recipe(String name, int servings, ArrayList<RecipeIngredient> ingredientList, ArrayList<String> instructionList) {
+    public Recipe(String name, int servings, ArrayList<RecipeIngredient> ingredientList,
+                  ArrayList<String> instructionList) {
         this.name = name;
         this.servings = servings;
         this.ingredientList = ingredientList;
