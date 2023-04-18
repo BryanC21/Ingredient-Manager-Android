@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements RecipeListener {
         list.add(ingredient1);
         list.add(ingredient2);
         list.add(ingredient3);
-        recipeController.getRecipe(list, 2);
+        //recipeController.getRecipe(list, 2);
     }
 
     public void openCamera(View view) {
