@@ -16,6 +16,7 @@ import com.sjsu.hackathon.ingredient_manager.controller.Chatgpt;
 import com.sjsu.hackathon.ingredient_manager.controller.RecipeController;
 import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
+import com.sjsu.hackathon.ingredient_manager.data.handler.RecipeHandler;
 import com.sjsu.hackathon.ingredient_manager.data.listener.IngredientListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.RecipeListener;

@@ -56,24 +56,8 @@ public class RecipeController implements ChatgptListener {
             JSONArray recipeListJson = new JSONArray(recipeText.split("\n\n")[1]);
             for (int i = 0; i < recipeListJson.length(); i++) {
                 JSONObject recipeJson = recipeListJson.getJSONObject(i);
-                ArrayList<RecipeIngredient> ingredientList = new ArrayList<>();
-                JSONArray ingredientListJson = recipeJson.getJSONArray("ingredients");
-                for (int j = 0; j < ingredientListJson.length(); j++) {
-                    JSONObject recipeIngredientJson = ingredientListJson.getJSONObject(j);
-                    RecipeIngredient recipeIngredient = new RecipeIngredient(
-                            recipeIngredientJson.getString("name"),
-                            recipeIngredientJson.getString("quantity"),
-                            recipeIngredientJson.getString("preparation"));
-                    ingredientList.add(recipeIngredient);
-                }
 
-                ArrayList<String> instructionList = new ArrayList<>();
-                JSONArray instructionListJson = recipeJson.getJSONArray("instructions");
-                for (int j = 0; j < instructionListJson.length(); j++) {
-                    instructionList.add(instructionListJson.getString(j));
-                }
-                Recipe recipe = new Recipe(recipeJson.getString("name"),
-                    recipeJson.getInt("servings"), ingredientList, instructionList);
+                Recipe recipe = new Recipe(recipeJson);
                 recipeList.add(recipe);
             }
             recipeListener.onGetSuccess(recipeList);
