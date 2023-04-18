@@ -5,17 +5,18 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sjsu.hackathon.ingredient_manager.data.listener.UnitListener;
+import com.sjsu.hackathon.ingredient_manager.data.listener.UserListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
 
 import java.util.ArrayList;
 
-public class UnitHandler {
+public class UnitHandler implements UserListener {
     private final DatabaseReference dbRef;
 
     private final UnitListener listener;
 
     public UnitHandler(UnitListener listener) {
-        UserHandler userHandler = new UserHandler();
+        UserHandler userHandler = new UserHandler(this);
         dbRef = FirebaseDatabase.getInstance().getReference("dev")
                 .child(userHandler.getId())
                 .child("units");
@@ -47,7 +48,7 @@ public class UnitHandler {
                             data.setId(snapshot.getKey());
                             list.add(data);
                         }
-                        listener.onGetAllFinish(list);
+                        listener.onUnitGetAllFinish(list);
                     } else {
                         listener.onDataFail("No data");
                     }
@@ -60,7 +61,7 @@ public class UnitHandler {
                     if (task.isSuccessful()) {
                         Unit data = task.getResult().getValue(Unit.class);
                         data.setId(task.getResult().getKey());
-                        listener.onGetFinish(data);
+                        listener.onUnitGetFinish(data);
                     } else {
                         listener.onDataFail("No data");
                     }
@@ -90,5 +91,20 @@ public class UnitHandler {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onDataSuccess(String reason) {
+
+    }
+
+    @Override
+    public void onDataFail(String reason) {
+
+    }
+
+    @Override
+    public void onExistsFinish(boolean exists) {
+
     }
 }

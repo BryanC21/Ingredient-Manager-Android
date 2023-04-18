@@ -73,12 +73,12 @@ public class HomeFragment extends Fragment implements IngredientListener {
     }
 
     @Override
-    public void onGetAllFinish(ArrayList<Ingredient> dataList) {
+    public void onIngredientGetAllFinish(ArrayList<Ingredient> dataList) {
         System.out.println(dataList);
     }
 
     @Override
-    public void onGetFinish(Ingredient data) {
+    public void onIngredientGetFinish(Ingredient data) {
         System.out.println(data);
     }
 

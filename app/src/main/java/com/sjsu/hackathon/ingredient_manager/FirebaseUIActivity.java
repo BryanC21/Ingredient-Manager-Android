@@ -8,11 +8,22 @@ import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract;
 import com.firebase.ui.auth.IdpResponse;
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
-import com.firebase.ui.auth.ui.idp.AuthMethodPickerActivity;
-import com.google.android.gms.auth.api.Auth;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.sjsu.hackathon.ingredient_manager.controller.AddDefaultController;
+import com.sjsu.hackathon.ingredient_manager.data.handler.CategoryHandler;
+import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
+import com.sjsu.hackathon.ingredient_manager.data.handler.UnitHandler;
+import com.sjsu.hackathon.ingredient_manager.data.handler.UserHandler;
+import com.sjsu.hackathon.ingredient_manager.data.listener.CategoryListener;
+import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
+import com.sjsu.hackathon.ingredient_manager.data.listener.UnitListener;
+import com.sjsu.hackathon.ingredient_manager.data.listener.UserListener;
+import com.sjsu.hackathon.ingredient_manager.data.model.Category;
+import com.sjsu.hackathon.ingredient_manager.data.model.Location;
+import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -21,7 +32,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.appcompat.app.AppCompatActivity;
 
 
-public class FirebaseUIActivity extends AppCompatActivity {
+public class FirebaseUIActivity extends AppCompatActivity implements UserListener {
 
     private final ActivityResultLauncher<Intent> signInLauncher = registerForActivityResult(
             new FirebaseAuthUIActivityResultContract(),
@@ -62,6 +73,8 @@ public class FirebaseUIActivity extends AppCompatActivity {
             // Successfully signed in
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             System.out.println(user.getEmail());
+            UserHandler userHandler = new UserHandler(this);
+            userHandler.exists();
             // send to next activity
             Intent intent = new Intent(this, MainActivity.class);
             intent.putExtra("user", user);
@@ -80,4 +93,22 @@ public class FirebaseUIActivity extends AppCompatActivity {
         }
     }
 
+
+    @Override
+    public void onDataSuccess(String reason) {
+
+    }
+
+    @Override
+    public void onDataFail(String reason) {
+
+    }
+
+    @Override
+    public void onExistsFinish(boolean exists) {
+        if (!exists) {
+            AddDefaultController addDefaultController = new AddDefaultController();
+            addDefaultController.addDefault();
+        }
+    }
 }

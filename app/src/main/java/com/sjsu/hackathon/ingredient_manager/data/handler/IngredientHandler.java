@@ -4,18 +4,19 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.sjsu.hackathon.ingredient_manager.data.listener.IngredientListener;
+import com.sjsu.hackathon.ingredient_manager.data.listener.UserListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Ingredient;
 
 import java.util.ArrayList;
 import java.util.Date;
 
-public class IngredientHandler {
+public class IngredientHandler implements UserListener {
     private final DatabaseReference dbRef;
 
     private final IngredientListener listener;
 
     public IngredientHandler(IngredientListener listener) {
-        UserHandler userHandler = new UserHandler();
+        UserHandler userHandler = new UserHandler(this);
         dbRef = FirebaseDatabase.getInstance().getReference("dev")
                 .child(userHandler.getId())
                 .child("ingredients");
@@ -52,7 +53,7 @@ public class IngredientHandler {
                             data.setId(snapshot.getKey());
                             list.add(data);
                         }
-                        listener.onGetAllFinish(list);
+                        listener.onIngredientGetAllFinish(list);
                     } else {
                         listener.onDataFail("No data");
                     }
@@ -65,7 +66,7 @@ public class IngredientHandler {
                     if (task.isSuccessful()) {
                         Ingredient data = task.getResult().getValue(Ingredient.class);
                         data.setId(task.getResult().getKey());
-                        listener.onGetFinish(data);
+                        listener.onIngredientGetFinish(data);
                     } else {
                         listener.onDataFail("No data");
                     }
@@ -101,5 +102,20 @@ public class IngredientHandler {
                     }
                 }
         );
+    }
+
+    @Override
+    public void onDataSuccess(String reason) {
+
+    }
+
+    @Override
+    public void onDataFail(String reason) {
+
+    }
+
+    @Override
+    public void onExistsFinish(boolean exists) {
+
     }
 }

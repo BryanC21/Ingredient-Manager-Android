@@ -5,6 +5,6 @@ import com.sjsu.hackathon.ingredient_manager.data.model.Category;
 import java.util.ArrayList;
 
 public interface CategoryListener extends DataListener {
-    void onGetAllFinish(ArrayList<Category> dataList);
-    void onGetFinish(Category data);
+    void onCategoryGetAllFinish(ArrayList<Category> dataList);
+    void onCategoryGetFinish(Category data);
 }
