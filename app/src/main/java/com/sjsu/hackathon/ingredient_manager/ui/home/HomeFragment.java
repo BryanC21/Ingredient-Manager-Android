@@ -10,15 +10,18 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.ActivityNavigator;
+import androidx.navigation.NavController;
+import androidx.navigation.NavDestination;
+import androidx.navigation.Navigation;
 
-import com.google.firebase.auth.FirebaseAuth;
 import com.sjsu.hackathon.ingredient_manager.MainActivity;
 import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
@@ -36,13 +39,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 public class HomeFragment extends Fragment implements IngredientListener, UnitListener, LocationListener {
 
     private FragmentHomeBinding binding;
+    private NavController navController;
+    private OnBackPressedCallback onBackPressedCallback;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -132,8 +135,29 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        // Set up open camera listener
         ImageButton myButton = binding.capture;
         myButton.setOnClickListener(v -> ((MainActivity) getActivity()).openCamera());
+        // -----------------------------
+
+        // Disable back button from leaving home fragment and returning to an empty activity
+        navController = Navigation.findNavController(view);
+        onBackPressedCallback = new OnBackPressedCallback(true /* enabled by default */) {
+            @Override
+            public void handleOnBackPressed() {
+                NavDestination currentDestination = navController.getCurrentDestination();
+                boolean isActivity = currentDestination instanceof ActivityNavigator.Destination;
+                boolean isChildFragment = currentDestination.getParent() != null;
+                if (!isActivity || !isChildFragment) {
+                    navController.navigateUp();
+                } else {
+                    requireActivity().onBackPressed();
+                }
+            }
+        };
+        requireActivity().getOnBackPressedDispatcher().addCallback(getViewLifecycleOwner(), onBackPressedCallback);
+        // -----------------------------
+
     }
 
     @Override
