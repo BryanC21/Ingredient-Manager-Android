@@ -55,10 +55,14 @@ public class DashboardFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //Use adapter to update the scroll list with the new data
-                RecyclerView recyclerView = binding.myListIng;
-                IngredientListAdapter adapter = new IngredientListAdapter(dataSnapshot);
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapter);
+                try {
+                    RecyclerView recyclerView = binding.myListIng;
+                    IngredientListAdapter adapter = new IngredientListAdapter(dataSnapshot);
+                    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                    recyclerView.setAdapter(adapter);
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
