@@ -26,7 +26,6 @@
         android:layout_height="54dp"
         android:layout_marginStart="216dp"
         android:background="@android:color/transparent"
-        android:onClick="openCamera"
         android:src="@drawable/camera"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

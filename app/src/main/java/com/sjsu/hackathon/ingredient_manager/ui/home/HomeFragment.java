@@ -9,14 +9,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.sjsu.hackathon.ingredient_manager.MainActivity;
 import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.UnitHandler;
@@ -123,6 +126,14 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
         });
 
         return root;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        ImageButton myButton = binding.capture;
+        myButton.setOnClickListener(v -> ((MainActivity) getActivity()).openCamera());
     }
 
     @Override

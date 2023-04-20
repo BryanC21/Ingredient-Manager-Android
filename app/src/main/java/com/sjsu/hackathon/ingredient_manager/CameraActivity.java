@@ -15,6 +15,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.lifecycle.LifecycleOwner;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -188,10 +189,12 @@ public class CameraActivity extends AppCompatActivity {
     }
 
     public void submitText(View view, String text) {
-        Intent intent = new Intent(this, MainActivity.class);
+        //Intent intent = new Intent(this, MainActivity.class);
         Bundle b = new Bundle();
         b.putString("label", text);
-        intent.putExtras(b);
-        startActivity(intent);
+        Intent resultIntent = new Intent();
+        resultIntent.putExtras(b);
+        setResult(Activity.RESULT_OK, resultIntent);
+        finish();
     }
 }

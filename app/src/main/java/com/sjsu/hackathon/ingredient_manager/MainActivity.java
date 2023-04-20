@@ -1,11 +1,15 @@
 package com.sjsu.hackathon.ingredient_manager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -24,10 +28,28 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity implements RecipeListener {
 
     private ActivityMainBinding binding;
+    private ActivityResultLauncher<Intent> launcher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        launcher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                result -> {
+                    // Check if the result was successful
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        // Get the data from the Intent extras
+                        Intent data = result.getData();
+                        Bundle bundle = data.getExtras();
+                        if (bundle != null) {
+                            String value = bundle.getString("label");
+                            System.out.println(value);
+                            TextView textView = findViewById(R.id.itemName);
+                            textView.setText(value);
+                            // Use the data as needed
+                        }
+                    }
+                });
 
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
@@ -59,9 +81,13 @@ public class MainActivity extends AppCompatActivity implements RecipeListener {
         //recipeController.getRecipe(list, 2);
     }
 
-    public void openCamera(View view) {
+    public ActivityResultLauncher<Intent> openCamera() {
+
         Intent intent = new Intent(this, CameraActivity.class);
-        startActivity(intent);
+        //startActivity(intent);
+        launcher.launch(intent);
+        return launcher;
+
     }
 
     @Override
