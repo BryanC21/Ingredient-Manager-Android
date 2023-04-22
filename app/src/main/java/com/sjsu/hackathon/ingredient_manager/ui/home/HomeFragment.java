@@ -23,12 +23,15 @@ import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
 import com.sjsu.hackathon.ingredient_manager.MainActivity;
+import com.sjsu.hackathon.ingredient_manager.data.handler.CategoryHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.UnitHandler;
+import com.sjsu.hackathon.ingredient_manager.data.listener.CategoryListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.IngredientListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.UnitListener;
+import com.sjsu.hackathon.ingredient_manager.data.model.Category;
 import com.sjsu.hackathon.ingredient_manager.data.model.Ingredient;
 import com.sjsu.hackathon.ingredient_manager.data.model.Location;
 import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
@@ -39,9 +42,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
-public class HomeFragment extends Fragment implements IngredientListener, UnitListener, LocationListener {
+public class HomeFragment extends Fragment implements IngredientListener, UnitListener, LocationListener, CategoryListener {
 
     private FragmentHomeBinding binding;
     private NavController navController;
@@ -64,8 +68,12 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
         LocationHandler loc = new LocationHandler(this);
         loc.getAll();
 
+        CategoryHandler cat = new CategoryHandler(this);
+        cat.getAll();
+
         binding.unit.setPrompt("Select a unit");
         binding.location.setPrompt("Select a location");
+        binding.location.setPrompt("Select a category");
 
         EditText dt = binding.dateText;
         dt.setOnClickListener(new View.OnClickListener() {
@@ -108,23 +116,27 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
         submit.setOnClickListener(view -> {
             Location l = (Location) binding.location.getSelectedItem();
             Unit u = (Unit) binding.unit.getSelectedItem();
+            Category c = (Category) binding.category.getSelectedItem();
 
             if (e.getText().toString().isEmpty() || q.getText().toString().isEmpty() || d.getText().toString().isEmpty() ||
-                    l == null || l.getId().isEmpty() || u == null || u.getId().isEmpty()) {
+                    l == null || l.getId().isEmpty() || l.getId().equals("-1") ||
+                    u == null || u.getId().isEmpty() || u.getId().equals("-1") ||
+                    c == null || c.getId().isEmpty() || c.getId().equals("-1")) {
                 Toast.makeText(this.getContext(), "Mandatory fields missing", Toast.LENGTH_SHORT).show();
                 return;
             }
             IngredientHandler dbHandler = new IngredientHandler(this);
             Date date = new Date();
-            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
+            SimpleDateFormat dateFormat = new SimpleDateFormat("M/d/yyyy", Locale.getDefault());
             try {
                 date = dateFormat.parse(d.getText().toString());
             } catch (ParseException ex) {
                 // leave it be to use current date
+                System.out.println(ex);
             }
 
-            dbHandler.add(e.getText().toString(), Float.parseFloat(q.getText().toString()), "img1", n.getText().toString(), date, date, "-NS8eopaXJh9mv5HI-Hs",
-                    "-NS8eopYaRGPiJGW9w32", "-NS8eopO_GxzgPnsPGBc", l.getId());
+            dbHandler.add(e.getText().toString(), Float.parseFloat(q.getText().toString()), "img1", n.getText().toString(), date, new Date(), l.getId(),
+                    c.getId(), u.getId(), "");
             dbHandler.getAll();
         });
 
@@ -185,6 +197,7 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
         binding.itemName.setText("");
         binding.location.setSelection(0);
         binding.unit.setSelection(0);
+        binding.category.setSelection(0);
     }
 
     @Override
@@ -196,7 +209,10 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
     @Override
     public void onLocationGetAllFinish(ArrayList<Location> dataList) {
         System.out.println(dataList);
-        ArrayAdapter<Location> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, dataList);
+        List<Location> items = new ArrayList<>();
+        items.add(new Location("Select a location", "-1"));
+        items.addAll(dataList);
+        ArrayAdapter<Location> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, items);
         this.binding.location.setAdapter(adapter);
     }
 
@@ -208,12 +224,30 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
     @Override
     public void onUnitGetAllFinish(ArrayList<Unit> dataList) {
         System.out.println(dataList);
-        ArrayAdapter<Unit> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, dataList);
+        List<Unit> items = new ArrayList<>();
+        items.add(new Unit("Select a unit", "-1"));
+        items.addAll(dataList);
+        ArrayAdapter<Unit> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, items);
         this.binding.unit.setAdapter(adapter);
     }
 
     @Override
     public void onUnitGetFinish(Unit data) {
         System.out.println(data);
+    }
+
+    @Override
+    public void onCategoryGetAllFinish(ArrayList<Category> dataList) {
+        System.out.println(dataList);
+        List<Category> items = new ArrayList<>();
+        items.add(new Category("Select a category", "-1"));
+        items.addAll(dataList);
+        ArrayAdapter<Category> adapter = new ArrayAdapter<>(this.getContext(), android.R.layout.simple_spinner_item, items);
+        this.binding.category.setAdapter(adapter);
+    }
+
+    @Override
+    public void onCategoryGetFinish(Category data) {
+
     }
 }
