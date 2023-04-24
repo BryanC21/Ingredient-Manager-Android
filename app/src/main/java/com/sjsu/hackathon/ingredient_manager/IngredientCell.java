@@ -13,6 +13,8 @@ import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sjsu.hackathon.ingredient_manager.data.model.Recipe;
+
 public class IngredientCell extends RecyclerView.ViewHolder {
 
     public TextView titleTextView;

@@ -1,12 +1,19 @@
 package com.sjsu.hackathon.ingredient_manager.data.model;
 
+import android.os.Build;
+import android.os.Parcel;
+import android.os.Parcelable;
+
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class Recipe {
+public class Recipe implements Parcelable {
     private String name;
     private int servings;
     private ArrayList<RecipeIngredient> ingredientList;
@@ -45,6 +52,25 @@ public class Recipe {
         this.instructionList = instructionList;
         this.json = recipeJson;
     }
+
+    protected Recipe(Parcel in) {
+        name = in.readString();
+        servings = in.readInt();
+        ingredientList = in.createTypedArrayList(RecipeIngredient.CREATOR);
+        instructionList = in.createStringArrayList();
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
+        @Override
+        public Recipe createFromParcel(Parcel in) {
+            return new Recipe(in);
+        }
+
+        @Override
+        public Recipe[] newArray(int size) {
+            return new Recipe[size];
+        }
+    };
 
     public String getName() {
         return name;
@@ -90,4 +116,16 @@ public class Recipe {
         return "Recipe: " + name + " " + " " + servings;
     }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(@NonNull Parcel parcel, int i) {
+        parcel.writeString(name);
+        parcel.writeInt(servings);
+        parcel.writeList(ingredientList);
+        parcel.writeStringList(instructionList);
+    }
 }

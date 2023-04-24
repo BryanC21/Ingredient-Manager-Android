@@ -49,7 +49,7 @@ public class RecipeHandler extends SQLiteOpenHelper {
         db.delete(TABLE_NAME, "id = ?", new String[]{Integer.toString(id)});
     }
 
-    public ArrayList<Recipe> getData() {
+    public ArrayList<Recipe> getAll() {
         ArrayList<Recipe> dataList = new ArrayList<>();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -64,6 +64,23 @@ public class RecipeHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         return dataList;
+    }
+
+    public Recipe get(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE id = ?",  new String[]{String.valueOf(id)});
+        if (cursor.moveToFirst()) {
+            do {
+                try {
+                    return new Recipe(new JSONObject(cursor.getString(1)));
+                } catch (JSONException e) {
+                    Log.e("JSON parse error", e.getMessage());
+                }
+            } while (cursor.moveToNext());
+        }
+        cursor.close();
+        return null;
     }
 
     @Override

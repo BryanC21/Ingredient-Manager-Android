@@ -56,10 +56,12 @@ public class UnitHandler implements UserListener {
     }
 
     public void get(String id) {
+        System.out.println(id);
         dbRef.child(id).get().addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
                         Unit data = task.getResult().getValue(Unit.class);
+                        System.out.println(data);
                         data.setId(task.getResult().getKey());
                         listener.onUnitGetFinish(data);
                     } else {
