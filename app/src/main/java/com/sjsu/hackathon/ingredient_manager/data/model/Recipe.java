@@ -144,6 +144,7 @@ public class Recipe implements Parcelable {
                 instructionList.put(instruction);
             }
             recipeJson.put("instructions", instructionList);
+            recipeJson.put("saved", this.saved);
         } catch (Exception e) {
             Log.e("Json fail", e.getMessage());
         }

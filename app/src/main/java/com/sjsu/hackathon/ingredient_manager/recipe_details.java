@@ -110,8 +110,6 @@ public class recipe_details extends Fragment {
                         button.setText("Save");
                     } else {
                         recipe.setSaved();
-                        System.out.println("Add new fav");
-                        System.out.println(recipe);
                         recipeHandler.addNewData(recipe);
                         button.setText("Unsave");
                     }
