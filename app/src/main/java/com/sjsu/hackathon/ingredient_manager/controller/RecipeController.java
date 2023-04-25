@@ -36,7 +36,7 @@ public class RecipeController implements ChatgptListener {
     public void getRecipe(ArrayList<Ingredient> list, int number) {
         this.list = list;
         this.number = number;
-        String message = "Create a recipe list in JSONArray format containing " +
+        String message = "Create a new recipe list in JSONArray format containing " +
                 String.valueOf(number) + " recipes in this format {'name', 'servings', " +
                 "'ingredients':[{'name', 'quantity', " +
                 "'preparation'}], 'instructions': []} using ";
@@ -59,7 +59,13 @@ public class RecipeController implements ChatgptListener {
             String recipeText = result.getJSONArray("choices").getJSONObject(0)
                     .getJSONObject("message").getString("content");
 //            System.out.println(recipeText);
-            JSONArray recipeListJson = new JSONArray(recipeText.split("\n\n")[1]);
+            JSONArray recipeListJson;
+            if (recipeText.contains("\n\n")) {
+                recipeListJson  = new JSONArray(recipeText.split("\n\n")[1]);
+            } else {
+                recipeListJson = new JSONArray(recipeText);
+            }
+
             for (int i = 0; i < recipeListJson.length(); i++) {
                 JSONObject recipeJson = recipeListJson.getJSONObject(i);
 
