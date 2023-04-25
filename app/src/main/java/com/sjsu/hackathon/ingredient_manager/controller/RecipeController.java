@@ -24,14 +24,17 @@ public class RecipeController implements ChatgptListener {
     private int number;
     private int retry;
 
+    private Chatgpt chatgpt;
+
     public RecipeController(Context context, RecipeListener recipeListener) {
         this.context = context;
         this.recipeListener = recipeListener;
         this.retry = 3;
+        chatgpt = new Chatgpt(this.context);
     }
 
     public void getRecipe(ArrayList<Ingredient> list, int number) {
-        Chatgpt chatgpt = new Chatgpt(this.context);
+
         this.list = list;
         this.number = number;
         String message = "Create a recipe list in JSONArray format containing " +
