@@ -71,12 +71,13 @@ public class RecipeHandler extends SQLiteOpenHelper {
 
     public Recipe get(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
+        Recipe recipe = null;
 
         Cursor cursor = db.rawQuery("SELECT * FROM " + TABLE_NAME + " WHERE id = ?",  new String[]{String.valueOf(id)});
         if (cursor.moveToFirst()) {
             do {
                 try {
-                    return new Recipe(new JSONObject(cursor.getString(1)), cursor.getInt(0));
+                    recipe = new Recipe(new JSONObject(cursor.getString(1)), cursor.getInt(0));
                 } catch (JSONException e) {
                     Log.e("JSON parse error", e.getMessage());
                 }
@@ -84,7 +85,7 @@ public class RecipeHandler extends SQLiteOpenHelper {
         }
         cursor.close();
         db.close();
-        return null;
+        return recipe;
     }
 
     @Override
