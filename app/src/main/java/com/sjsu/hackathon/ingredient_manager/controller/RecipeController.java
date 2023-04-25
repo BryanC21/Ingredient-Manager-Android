@@ -46,6 +46,7 @@ public class RecipeController implements ChatgptListener {
         for (Ingredient ingredient : list) {
             message += ingredient.getName() + ", ";
         }
+        message += "without any explanation";
         chatgpt.sendMessage(message, this, messages);
     }
 
@@ -61,19 +62,9 @@ public class RecipeController implements ChatgptListener {
             JSONObject result = new JSONObject(response);
             JSONObject messageJSON = result.getJSONArray("choices").getJSONObject(0)
                     .getJSONObject("message");
-            System.out.println(messageJSON);
             messages.put(messageJSON);
             String recipeText = messageJSON.getString("content");
-//            System.out.println(recipeText);
-//            recipeText = recipeText.replaceAll("```", "");
-//            recipeText = recipeText.replaceAll("json", "");
             recipeText = recipeText.substring(recipeText.indexOf('['), recipeText.lastIndexOf(']') + 1);
-//            JSONArray recipeListJson;
-//            if (recipeText.contains("\n\n")) {
-//                recipeListJson  = new JSONArray(recipeText.split("\n\n")[1]);
-//            } else {
-//                recipeListJson = new JSONArray(recipeText);
-//            }
             JSONArray recipeListJson = new JSONArray(recipeText);
             for (int i = 0; i < recipeListJson.length(); i++) {
                 JSONObject recipeJson = recipeListJson.getJSONObject(i);
