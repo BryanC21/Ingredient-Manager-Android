@@ -56,7 +56,7 @@ public class RecipeHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 try {
-                    dataList.add(new Recipe(new JSONObject(cursor.getString(1))));
+                    dataList.add(new Recipe(new JSONObject(cursor.getString(1)), cursor.getInt(0)));
                 } catch (JSONException e) {
                     Log.e("JSON parse error", e.getMessage());
                 }
@@ -73,7 +73,7 @@ public class RecipeHandler extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 try {
-                    return new Recipe(new JSONObject(cursor.getString(1)));
+                    return new Recipe(new JSONObject(cursor.getString(1)), cursor.getInt(0));
                 } catch (JSONException e) {
                     Log.e("JSON parse error", e.getMessage());
                 }

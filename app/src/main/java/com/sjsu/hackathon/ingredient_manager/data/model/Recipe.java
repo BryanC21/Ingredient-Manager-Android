@@ -14,19 +14,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Recipe implements Parcelable {
+    private int id;
     private String name;
     private int servings;
     private ArrayList<RecipeIngredient> ingredientList;
     private ArrayList<String> instructionList;
+    private boolean saved;
     private JSONObject json;
 
+
     public Recipe(String name, int servings, ArrayList<RecipeIngredient> ingredientList,
-                  ArrayList<String> instructionList, JSONObject json) {
+                  ArrayList<String> instructionList, JSONObject json, boolean saved) {
         this.name = name;
         this.servings = servings;
         this.ingredientList = ingredientList;
         this.instructionList = instructionList;
         this.json = json;
+        this.saved = saved;
     }
 
     public Recipe(JSONObject recipeJson) throws JSONException {
@@ -53,6 +57,11 @@ public class Recipe implements Parcelable {
         this.json = recipeJson;
     }
 
+    public Recipe(JSONObject recipeJson, int id) throws JSONException {
+        this(recipeJson);
+        this.id = id;
+    }
+
     protected Recipe(Parcel in) {
         name = in.readString();
         servings = in.readInt();
@@ -71,6 +80,14 @@ public class Recipe implements Parcelable {
             return new Recipe[size];
         }
     };
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -112,6 +129,18 @@ public class Recipe implements Parcelable {
         this.json = json;
     }
 
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
+    }
+
+    public void setSaved() {
+        this.saved = !this.saved;
+    }
+
     public String toString() {
         return "Recipe: " + name + " " + " " + servings;
     }
@@ -127,5 +156,8 @@ public class Recipe implements Parcelable {
         parcel.writeInt(servings);
         parcel.writeList(ingredientList);
         parcel.writeStringList(instructionList);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            parcel.writeBoolean(saved);
+        }
     }
 }

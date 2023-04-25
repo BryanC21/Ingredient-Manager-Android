@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -15,6 +16,8 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.sjsu.hackathon.ingredient_manager.data.handler.RecipeHandler;
+import com.sjsu.hackathon.ingredient_manager.data.listener.RecipeListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Recipe;
 import com.sjsu.hackathon.ingredient_manager.data.model.RecipeIngredient;
 import com.sjsu.hackathon.ingredient_manager.databinding.FragmentRecipeDetailsBinding;
@@ -91,11 +94,28 @@ public class recipe_details extends Fragment {
             } catch (Exception e) {
                 System.out.println(e);
             }
+
+            Button button = rootView.findViewById(R.id.recipe_details_save_btn);
+            if (recipe.isSaved()) {
+                button.setText("Unsave");
+            } else {
+                button.setText("Save");
+            }
+            button.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View view) {
+                    RecipeHandler recipeHandler = new RecipeHandler(getActivity());
+                    if (recipe.isSaved()) {
+                        recipeHandler.removeData(recipe.getId());
+                    } else {
+                        recipeHandler.addNewData(recipe);
+                    }
+                    recipe.setSaved();
+                }
+            });
         }
         //---------
 
         return rootView;
     }
-
 
 }
