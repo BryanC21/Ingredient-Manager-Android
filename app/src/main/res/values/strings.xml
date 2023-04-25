@@ -2,6 +2,7 @@
     <string name="title_home">Add Ingredient</string>
     <string name="title_dashboard">Ingredients</string>
     <string name="title_notifications">Recipes</string>
+    <string name="title_favorites">Favorites</string>
     <string name="title_trade" />
     <string name="app_name">ingredient_manager</string>
     <string name="title_activity_main2">Leanback MainActivity2</string>
