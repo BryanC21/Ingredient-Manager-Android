@@ -35,7 +35,7 @@ public class IngredientListAdapter extends RecyclerView.Adapter<IngredientCell> 
     @Override
     public IngredientCell onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.favorite_item, parent, false);
+                .inflate(R.layout.ingredient_cell, parent, false);
         return new IngredientCell(view);
     }
 
