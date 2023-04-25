@@ -15,20 +15,34 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.sjsu.hackathon.ingredient_manager.controller.RecipeController;
+import com.sjsu.hackathon.ingredient_manager.data.listener.RecipeListener;
+import com.sjsu.hackathon.ingredient_manager.data.model.Ingredient;
 import com.sjsu.hackathon.ingredient_manager.data.model.Recipe;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link RecipeList#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecipeList extends Fragment {
+public class RecipeList extends Fragment implements RecipeListener {
 
     private View rootView;
     private NavController navController;
+
+    private ArrayList<Recipe> recipeList;
+
+    private ArrayList<Ingredient> ingredientList;
+
+    private RecipeController recipeController;
+
+    private Button regen;
 
     public RecipeList() {
         // Required empty public constructor
@@ -50,6 +64,16 @@ public class RecipeList extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(this);
+
+        regen = rootView.findViewById(R.id.regen_button);
+        regen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.d("regen", "beginning regen");
+                rootView.findViewById(R.id.notifications_loading2).setVisibility(View.VISIBLE);
+                recipeController.getRecipe(ingredientList, 2);
+            }
+        });
     }
 
     @Override
@@ -61,12 +85,20 @@ public class RecipeList extends Fragment {
 
         if (getArguments() != null) {
 
-            ArrayList<Recipe> recipeList = getArguments().getParcelableArrayList("recipes");
-            Log.d("returned from GPT-3", String.valueOf(recipeList.size()));
-            RecyclerView recyclerView = rootView.findViewById(R.id.recipe_list_recycler_view);
-            RecipeListAdapter adapter = new RecipeListAdapter(recipeList);
-            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-            recyclerView.setAdapter(adapter);
+            //recipeList = getArguments().getParcelableArrayList("recipes");
+            ArrayList<String> ingredientsTemp = getArguments().getStringArrayList("ingredients");
+            ingredientList = new ArrayList<>();
+            recipeList = new ArrayList<>();
+
+            for(int i = 0; i < ingredientsTemp.size(); i++){
+                //TODO very bad, fix this, string to ingredient
+                ingredientList.add(new Ingredient(ingredientsTemp.get(i), 1.0, "none", "none", new Date(), new Date(), "none", "none", "none"));
+            }
+
+            recipeController = new RecipeController(getContext(), this);
+            Log.d("Attempt GPT", "starting");
+            rootView.findViewById(R.id.notifications_loading2).setVisibility(View.VISIBLE);
+            recipeController.getRecipe(ingredientList, 2);
         }
 
         return rootView;
@@ -76,5 +108,32 @@ public class RecipeList extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         navController.popBackStack(); // Navigate back to previous fragment
         return true;
+    }
+
+    @Override
+    public void onDataSuccess(String reason) {
+
+    }
+
+    @Override
+    public void onDataFail(String reason) {
+        rootView.findViewById(R.id.notifications_loading2).setVisibility(View.INVISIBLE);
+        Toast.makeText(getContext(), "Generate Recipes Failed. Try again.", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onGetSuccess(ArrayList<Recipe> recipeList) {
+        //this.recipeList.addAll(recipeList);
+        Log.d("RecipeList", "count: " + recipeList.size());
+        Log.d("RecipeListGlobal", "count: " + this.recipeList.size());
+        rootView.findViewById(R.id.notifications_loading2).setVisibility(View.INVISIBLE);
+        for(Recipe r : recipeList){
+            this.recipeList.add(r);
+        }
+        //recipeController.clearHistory();
+        RecyclerView recyclerView = rootView.findViewById(R.id.recipe_list_recycler_view);
+        RecipeListAdapter adapter = new RecipeListAdapter(this.recipeList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setAdapter(adapter);
     }
 }

@@ -46,6 +46,7 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
 
     private Button submit;
 
+    ArrayList<String> selected;
     private RecipeController recipeController;
 
     private NavController navController;
@@ -85,7 +86,7 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
                     submit.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            ArrayList<String> selected = adapter.getCheckedItems();
+                            selected = adapter.getCheckedItems();
                             ArrayList<Ingredient> ingredients = new ArrayList<>();
                             if(selected.size() == 0){
                                 Toast.makeText(getContext(), "Please select at least one ingredient", Toast.LENGTH_SHORT).show();
@@ -96,9 +97,21 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
                                     //TODO very bad, fix this, string to ingredient
                                     ingredients.add(new Ingredient(selected.get(i), 1.0, "none", "none", new Date(), new Date(), "none", "none", "none"));
                                 }
-                                binding.getRoot().findViewById(R.id.notifications_loading).setVisibility(View.VISIBLE);
+                                /*binding.getRoot().findViewById(R.id.notifications_loading).setVisibility(View.VISIBLE);
 //                                Toast.makeText(getContext(), "Loading...", Toast.LENGTH_SHORT).show();
+                                Log.d("Begin GPT", "Begin GPT");
                                 recipeController.getRecipe(ingredients, 2);
+                                */
+                                Bundle bundle = new Bundle();
+                                bundle.putStringArrayList("ingredients", selected);
+
+                                NavOptions navOptions = new NavOptions.Builder()
+                                        .setLaunchSingleTop(true)
+                                        .setPopUpTo(navController.getCurrentDestination().getId(), false)
+                                        .build();
+                                navController.navigate(R.id.action_navigation_notifications_to_fragment_recipe_list, bundle, navOptions);
+
+
                             }
                         }
                     });
@@ -135,7 +148,10 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
 
     @Override
     public void onDataFail(String reason) {
+
         Log.d("Recipe Failed!", reason);
+        binding.getRoot().findViewById(R.id.notifications_loading).setVisibility(View.INVISIBLE);
+        Toast.makeText(getContext(), "Something went wrong. Try again.", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -144,9 +160,11 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
         Log.d("Recipe", recipeList.toString());
         //Navigate to the recipe list fragment
 
+        //recipeController.clearHistory();
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("recipes", recipeList);
+        bundle.putStringArrayList("ingredients", selected);
 
         NavOptions navOptions = new NavOptions.Builder()
                 .setLaunchSingleTop(true)
