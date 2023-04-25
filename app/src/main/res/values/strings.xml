@@ -1,5 +1,5 @@
 <resources>
-    <string name="title_home">Add Ingredient</string>
+    <string name="title_home">Add</string>
     <string name="title_dashboard">Ingredients</string>
     <string name="title_notifications">Recipes</string>
     <string name="title_favorites">Favorites</string>

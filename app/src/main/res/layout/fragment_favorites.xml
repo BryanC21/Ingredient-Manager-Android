@@ -10,12 +10,24 @@
     <!-- TODO: Update blank fragment layout -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/favorites_list"
-        android:layout_width="413dp"
-        android:layout_height="552dp"
+        android:layout_width="345dp"
+        android:layout_height="499dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.497" />
+        app:layout_constraintVertical_bias="0.589" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="266dp"
+        android:layout_height="84dp"
+        android:gravity="center"
+        android:text="Favorite Recipies"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/favorites_list"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
