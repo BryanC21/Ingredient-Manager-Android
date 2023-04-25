@@ -22,7 +22,6 @@ public class Chatgpt {
     private static final String BASE_URL = "https://api.openai.com/v1/chat/completions";
     private static final String MODEL_ID = "gpt-3.5-turbo";
 
-    private JSONArray messages;
 
     private final RequestQueue requestQueue;
 
@@ -31,10 +30,9 @@ public class Chatgpt {
     public Chatgpt(Context context) {
         this.context = context;
         requestQueue = Volley.newRequestQueue(context);
-        messages = new JSONArray();
     }
 
-    public void sendMessage(String message, final ChatgptListener callback) {
+    public void sendMessage(String message, final ChatgptListener callback, JSONArray messages) {
         String url = BASE_URL;
         String api_key = this.context.getResources().getString(R.string.OPENAI_API_KEY);
 
@@ -46,6 +44,7 @@ public class Chatgpt {
             messageJSON.put("role", "user");
             messageJSON.put("content", message);
             messages.put(messageJSON);
+//            System.out.println(messages);
             requestBody.put("messages", messages);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -55,12 +54,6 @@ public class Chatgpt {
                 url,
                 requestBody,
                 response -> {
-                    try {
-                        messages.put(response.getJSONArray("choices").getJSONObject(0)
-                                .getJSONObject("message"));
-                    } catch (JSONException e) {
-                        throw new RuntimeException(e);
-                    }
                     callback.onSuccess(response.toString());
                 },
                 error -> {
@@ -83,9 +76,5 @@ public class Chatgpt {
                 DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(jsonObjectRequest);
-    }
-
-    public void clearHistory() {
-        messages = new JSONArray();
     }
 }

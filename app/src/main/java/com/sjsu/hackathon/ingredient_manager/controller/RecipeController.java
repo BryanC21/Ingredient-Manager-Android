@@ -24,6 +24,8 @@ public class RecipeController implements ChatgptListener {
     private int number;
     private int retry;
 
+    private JSONArray messages;
+
     private Chatgpt chatgpt;
 
     public RecipeController(Context context, RecipeListener recipeListener) {
@@ -31,6 +33,7 @@ public class RecipeController implements ChatgptListener {
         this.recipeListener = recipeListener;
         this.retry = 3;
         chatgpt = new Chatgpt(this.context);
+        messages = new JSONArray();
     }
 
     public void getRecipe(ArrayList<Ingredient> list, int number) {
@@ -43,11 +46,11 @@ public class RecipeController implements ChatgptListener {
         for (Ingredient ingredient : list) {
             message += ingredient.getName() + ", ";
         }
-        chatgpt.sendMessage(message, this);
+        chatgpt.sendMessage(message, this, messages);
     }
 
     public void clearHistory() {
-        chatgpt.clearHistory();
+        messages = new JSONArray();
     }
 
     @Override
@@ -56,9 +59,13 @@ public class RecipeController implements ChatgptListener {
             System.out.println(response);
             ArrayList<Recipe> recipeList = new ArrayList<>();
             JSONObject result = new JSONObject(response);
-            String recipeText = result.getJSONArray("choices").getJSONObject(0)
-                    .getJSONObject("message").getString("content");
+            JSONObject messageJSON = result.getJSONArray("choices").getJSONObject(0)
+                    .getJSONObject("message");
+            System.out.println(messageJSON);
+            messages.put(messageJSON);
+            String recipeText = messageJSON.getString("content");
 //            System.out.println(recipeText);
+            recipeText = recipeText.replaceAll("```", "");
             JSONArray recipeListJson;
             if (recipeText.contains("\n\n")) {
                 recipeListJson  = new JSONArray(recipeText.split("\n\n")[1]);
