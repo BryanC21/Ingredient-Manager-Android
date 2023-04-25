@@ -8,19 +8,25 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sjsu.hackathon.ingredient_manager.data.handler.CategoryHandler;
+import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.UnitHandler;
 import com.sjsu.hackathon.ingredient_manager.data.listener.CategoryListener;
+import com.sjsu.hackathon.ingredient_manager.data.listener.IngredientListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.UnitListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Category;
+import com.sjsu.hackathon.ingredient_manager.data.model.Ingredient;
 import com.sjsu.hackathon.ingredient_manager.data.model.Location;
 import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
 
@@ -89,6 +95,7 @@ public class ingredient_details extends Fragment {
 
             // unused
             id = getArguments().getString("id");
+            Log.d("id", id);
 
             // Name
             TextView name = rootView.findViewById(R.id.ingredient_details_name);
@@ -109,9 +116,9 @@ public class ingredient_details extends Fragment {
             createTime.setText("Created: " + this.createTime.toString());
 
             // Image TODO: add image
-            img = getArguments().getString("img");
+            /*img = getArguments().getString("img");
             TextView imgView = rootView.findViewById(R.id.ingredient_details_img);
-            imgView.setText("Image: " + img);
+            imgView.setText("Image: " + img);*/
 
             // Notes
             notes = getArguments().getString("notes");
@@ -183,6 +190,31 @@ public class ingredient_details extends Fragment {
             };
             CategoryHandler categoryHandler = new CategoryHandler(categoryListener);
             categoryHandler.get(categoryId);
+
+            //Set listener for delete button
+            Button deleteButton = rootView.findViewById(R.id.button3);
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    IngredientListener ingredientListener = new IngredientListener() {
+                        @Override
+                        public void onIngredientGetAllFinish(ArrayList<Ingredient> dataList) {}
+                        @Override
+                        public void onIngredientGetFinish(Ingredient data) {}
+                        @Override
+                        public void onDataSuccess(String reason) {
+                            navController.popBackStack();
+                        }
+                        @Override
+                        public void onDataFail(String reason) {
+                            Toast.makeText(getContext(), "Delete failed. Try again later.", Toast.LENGTH_SHORT).show();
+                        }
+                    };
+                    IngredientHandler ingredientHandler = new IngredientHandler(ingredientListener);
+                    Log.d("IngredientDetails", "onClick: " + id);
+                    ingredientHandler.remove(id);
+                }
+            });
 
         }
         //---------

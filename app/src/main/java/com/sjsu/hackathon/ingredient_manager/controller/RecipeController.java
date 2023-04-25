@@ -62,7 +62,6 @@ public class RecipeController implements ChatgptListener {
             JSONObject messageJSON = result.getJSONArray("choices").getJSONObject(0)
                     .getJSONObject("message");
             System.out.println(messageJSON);
-            messages.put(messageJSON);
             String recipeText = messageJSON.getString("content");
 //            System.out.println(recipeText);
 //            recipeText = recipeText.replaceAll("```", "");
@@ -81,6 +80,7 @@ public class RecipeController implements ChatgptListener {
                 Recipe recipe = new Recipe(recipeJson);
                 recipeList.add(recipe);
             }
+            messages.put(messageJSON);
             recipeListener.onGetSuccess(recipeList);
         } catch (JSONException | ArrayIndexOutOfBoundsException error) {
             Log.e("Recipe Json Parse Error", error.getMessage());
