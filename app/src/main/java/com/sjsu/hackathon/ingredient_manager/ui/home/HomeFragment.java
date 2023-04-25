@@ -1,6 +1,7 @@
 package com.sjsu.hackathon.ingredient_manager.ui.home;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,11 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
+import com.firebase.ui.auth.AuthUI;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.sjsu.hackathon.ingredient_manager.FirebaseUIActivity;
 import com.sjsu.hackathon.ingredient_manager.MainActivity;
 import com.sjsu.hackathon.ingredient_manager.data.handler.CategoryHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
@@ -138,6 +144,23 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
             dbHandler.add(e.getText().toString(), Float.parseFloat(q.getText().toString()), "img1", n.getText().toString(), date, new Date(), l.getId(),
                     c.getId(), u.getId(), "");
             dbHandler.getAll();
+        });
+
+        Button logout = binding.logoutButton;
+        logout.setOnClickListener(view -> {
+            AuthUI.getInstance()
+                    .signOut(getContext())
+                    .addOnCompleteListener(new OnCompleteListener<Void>(){
+
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            Intent intent = new Intent(getActivity(), FirebaseUIActivity.class);
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            getActivity().finish();
+
+                        }
+                    });
         });
 
         return root;

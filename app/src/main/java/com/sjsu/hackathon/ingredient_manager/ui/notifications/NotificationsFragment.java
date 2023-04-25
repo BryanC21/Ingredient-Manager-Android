@@ -10,11 +10,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.navigation.NavController;
 import androidx.navigation.NavOptions;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,6 +47,8 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
     private Button submit;
 
     private RecipeController recipeController;
+
+    private NavController navController;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -119,6 +123,11 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
         binding = null;
     }
 
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
+    }
+
     @Override
     public void onDataSuccess(String reason) {
         Log.d("Recipe good?", reason);
@@ -134,14 +143,14 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
         Log.d("Recipe success?", "Yes");
         Log.d("Recipe", recipeList.toString());
         //Navigate to the recipe list fragment
-        NavController navController = Navigation.findNavController(binding.getRoot());
+
 
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("recipes", recipeList);
 
         NavOptions navOptions = new NavOptions.Builder()
                 .setLaunchSingleTop(true)
-                .setPopUpTo(navController.getCurrentDestination().getId(), true)
+                .setPopUpTo(navController.getCurrentDestination().getId(), false)
                 .build();
         navController.navigate(R.id.action_navigation_notifications_to_fragment_recipe_list, bundle, navOptions);
         binding.getRoot().findViewById(R.id.notifications_loading).setVisibility(View.INVISIBLE);
