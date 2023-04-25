@@ -84,4 +84,8 @@ public class Chatgpt {
                 DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         requestQueue.add(jsonObjectRequest);
     }
+
+    public void clearHistory() {
+        messages = new JSONArray();
+    }
 }

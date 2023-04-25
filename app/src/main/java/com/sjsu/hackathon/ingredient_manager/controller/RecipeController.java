@@ -34,7 +34,6 @@ public class RecipeController implements ChatgptListener {
     }
 
     public void getRecipe(ArrayList<Ingredient> list, int number) {
-
         this.list = list;
         this.number = number;
         String message = "Create a recipe list in JSONArray format containing " +
@@ -45,6 +44,10 @@ public class RecipeController implements ChatgptListener {
             message += ingredient.getName() + ", ";
         }
         chatgpt.sendMessage(message, this);
+    }
+
+    public void clearHistory() {
+        chatgpt.clearHistory();
     }
 
     @Override
