@@ -49,7 +49,14 @@
         android:id="@+id/fragment_recipe_list"
         android:name="com.sjsu.hackathon.ingredient_manager.RecipeList"
         android:label="Recipe List"
-        tools:layout="@layout/fragment_recipe_list" />
+        tools:layout="@layout/fragment_recipe_list" >
+        <action
+            android:id="@+id/action_fragment_recipe_list_to_fragment_recipe_details"
+            app:destination="@+id/fragment_recipe_details"
+            app:popUpTo="@+id/fragment_recipe_list"
+            app:popUpToInclusive="true"
+            />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_new"
@@ -57,4 +64,11 @@
         android:label=""
         tools:layout="@layout/fragment_new"
         ></fragment>
+
+    <fragment
+        android:id="@+id/fragment_recipe_details"
+        android:name="com.sjsu.hackathon.ingredient_manager.recipe_details"
+        android:label="Recipe Details"
+        tools:layout="@layout/fragment_recipe_details" />
+
 </navigation>

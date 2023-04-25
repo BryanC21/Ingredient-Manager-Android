@@ -72,22 +72,22 @@ public class recipe_details extends Fragment {
         View root = binding.getRoot();
 
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_ingredient_details, container, false);
+        rootView =  inflater.inflate(R.layout.fragment_recipe_details, container, false);
 
         //---------
         if (getArguments() != null) {
             Recipe recipe = getArguments().getParcelable("recipe");
 
             // Name
-            TextView name = rootView.findViewById(R.id.ingredient_details_name);
+            TextView name = rootView.findViewById(R.id.recipe_details_name);
             name.setText("Name: " + recipe.getName());
 
             // servings
-            TextView servings = rootView.findViewById(R.id.ingredient_details_quantity);
+            TextView servings = rootView.findViewById(R.id.recipe_details_servings);
             servings.setText("Servings: " + recipe.getServings());
 
             try {
-                RecyclerView recyclerView = binding.ingredientList;
+                RecyclerView recyclerView = rootView.findViewById(R.id.ingredientList);
                 RecipeIngredientListAdapter adapter = new RecipeIngredientListAdapter(recipe.getIngredientList());
                 recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
                 recyclerView.setAdapter(adapter);
