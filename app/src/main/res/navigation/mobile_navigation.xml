@@ -59,11 +59,13 @@
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_new"
-        android:name="com.sjsu.hackathon.ingredient_manager.NewFragment"
+        android:id="@+id/navigation_favorite"
+        android:name="com.sjsu.hackathon.ingredient_manager.FavoritesFragment"
         android:label=""
-        tools:layout="@layout/fragment_new"
-        ></fragment>
+        tools:layout="@layout/fragment_favorites"
+        >
+
+    </fragment>
 
     <fragment
         android:id="@+id/fragment_recipe_details"

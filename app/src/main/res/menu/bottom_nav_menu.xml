@@ -17,7 +17,8 @@
         android:title="@string/title_notifications" />
 
     <item
-        android:id="@+id/navigation_new"
-        android:title="TODO"></item>
+        android:id="@+id/navigation_favorite"
+        android:title="@string/title_favorites"
+        android:icon="@drawable/baseline_favorite_24"/>
 
 </menu>
