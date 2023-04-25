@@ -22,6 +22,8 @@ public class Chatgpt {
     private static final String BASE_URL = "https://api.openai.com/v1/chat/completions";
     private static final String MODEL_ID = "gpt-3.5-turbo";
 
+    private JSONArray messages;
+
     private final RequestQueue requestQueue;
 
     private final Context context;
@@ -29,6 +31,7 @@ public class Chatgpt {
     public Chatgpt(Context context) {
         this.context = context;
         requestQueue = Volley.newRequestQueue(context);
+        messages = new JSONArray();
     }
 
     public void sendMessage(String message, final ChatgptListener callback) {
@@ -36,7 +39,7 @@ public class Chatgpt {
         String api_key = this.context.getResources().getString(R.string.OPENAI_API_KEY);
 
         JSONObject requestBody = new JSONObject();
-        JSONArray messages = new JSONArray();
+
         JSONObject messageJSON = new JSONObject();
         try {
             requestBody.put("model", MODEL_ID);
@@ -51,7 +54,15 @@ public class Chatgpt {
                 Request.Method.POST,
                 url,
                 requestBody,
-                response -> callback.onSuccess(response.toString()),
+                response -> {
+                    try {
+                        messages.put(response.getJSONArray("choices").getJSONObject(0)
+                                .getJSONObject("message"));
+                    } catch (JSONException e) {
+                        throw new RuntimeException(e);
+                    }
+                    callback.onSuccess(response.toString());
+                },
                 error -> {
                     System.out.println(error);
                     Log.e("OpenAIChat", "Error occurred while making API request: " + error.getMessage());
