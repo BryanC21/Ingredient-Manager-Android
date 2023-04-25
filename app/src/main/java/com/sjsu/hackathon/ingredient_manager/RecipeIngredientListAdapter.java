@@ -14,7 +14,7 @@ import com.sjsu.hackathon.ingredient_manager.data.model.RecipeIngredient;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RecipeIngredientListAdapter extends RecyclerView.Adapter<RecipeCell>  {
+public class RecipeIngredientListAdapter extends RecyclerView.Adapter<OtherRecipeCell>  {
 
     RecipeIngredient dataStore;
     ArrayList<RecipeIngredient> list;
@@ -28,14 +28,14 @@ public class RecipeIngredientListAdapter extends RecyclerView.Adapter<RecipeCell
     }
 
     @Override
-    public RecipeCell onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public OtherRecipeCell onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.recipe_ingredient_cell, parent, false);
-        return new RecipeCell(view);
+        return new OtherRecipeCell(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecipeCell holder, int position) {
+    public void onBindViewHolder(@NonNull OtherRecipeCell holder, int position) {
         RecipeIngredient data = list.get(position);
         holder.setDetails(data);
         holder.nameTextView.setText(data.getName());
