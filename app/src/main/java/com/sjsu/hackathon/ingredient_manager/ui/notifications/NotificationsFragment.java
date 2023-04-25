@@ -92,7 +92,8 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
                                     //TODO very bad, fix this, string to ingredient
                                     ingredients.add(new Ingredient(selected.get(i), 1.0, "none", "none", new Date(), new Date(), "none", "none", "none"));
                                 }
-                                Toast.makeText(getContext(), "Loading...", Toast.LENGTH_SHORT).show();
+                                binding.getRoot().findViewById(R.id.notifications_loading).setVisibility(View.VISIBLE);
+//                                Toast.makeText(getContext(), "Loading...", Toast.LENGTH_SHORT).show();
                                 recipeController.getRecipe(ingredients, 2);
                             }
                         }
@@ -143,5 +144,6 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
                 .setPopUpTo(navController.getCurrentDestination().getId(), true)
                 .build();
         navController.navigate(R.id.action_navigation_notifications_to_fragment_recipe_list, bundle, navOptions);
+        binding.getRoot().findViewById(R.id.notifications_loading).setVisibility(View.INVISIBLE);
     }
 }
