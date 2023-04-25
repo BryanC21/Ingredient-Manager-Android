@@ -68,6 +68,15 @@
     </fragment>
 
     <fragment
+        android:id="@+id/navigation_logout"
+        android:name="com.sjsu.hackathon.ingredient_manager.ui.LogoutFragment"
+        android:label=""
+        tools:layout="@layout/fragment_logout"
+        >
+
+    </fragment>
+
+    <fragment
         android:id="@+id/fragment_recipe_details"
         android:name="com.sjsu.hackathon.ingredient_manager.recipe_details"
         android:label="Recipe Details"

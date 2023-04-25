@@ -19,16 +19,6 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.913" />
 
-    <Button
-        android:id="@+id/logoutButton"
-        android:layout_width="48dp"
-        android:layout_height="176dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="18dp"
-        android:text="Logout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <EditText
         android:id="@+id/itemName"
         android:layout_width="258dp"

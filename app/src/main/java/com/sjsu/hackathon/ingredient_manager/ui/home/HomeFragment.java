@@ -146,23 +146,6 @@ public class HomeFragment extends Fragment implements IngredientListener, UnitLi
             dbHandler.getAll();
         });
 
-        Button logout = binding.logoutButton;
-        logout.setOnClickListener(view -> {
-            AuthUI.getInstance()
-                    .signOut(getContext())
-                    .addOnCompleteListener(new OnCompleteListener<Void>(){
-
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            Intent intent = new Intent(getActivity(), FirebaseUIActivity.class);
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            getActivity().finish();
-
-                        }
-                    });
-        });
-
         return root;
     }
 
