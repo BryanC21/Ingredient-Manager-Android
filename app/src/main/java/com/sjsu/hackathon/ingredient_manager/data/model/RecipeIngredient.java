@@ -2,8 +2,11 @@ package com.sjsu.hackathon.ingredient_manager.data.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
+
+import org.json.JSONObject;
 
 public class RecipeIngredient implements Parcelable {
 
@@ -57,6 +60,18 @@ public class RecipeIngredient implements Parcelable {
 
     public void setPreparation(String preparation) {
         this.preparation = preparation;
+    }
+
+    public JSONObject toJson() {
+        JSONObject ingredientJson = new JSONObject();
+        try {
+            ingredientJson.put("name", this.name);
+            ingredientJson.put("quantity", this.quantity);
+            ingredientJson.put("preparation", this.preparation);
+        } catch (Exception e) {
+            Log.e("Json fail", e.getMessage());
+        }
+        return ingredientJson;
     }
 
     @Override

@@ -31,6 +31,7 @@ public class RecipeHandler extends SQLiteOpenHelper {
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DATA_COL + " TEXT)";
         db.execSQL(query);
+        db.close();
     }
 
     public void addNewData(Recipe recipe) {
@@ -47,6 +48,7 @@ public class RecipeHandler extends SQLiteOpenHelper {
     public void removeData(int id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.delete(TABLE_NAME, "id = ?", new String[]{Integer.toString(id)});
+        db.close();
     }
 
     public ArrayList<Recipe> getAll() {
@@ -63,6 +65,7 @@ public class RecipeHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return dataList;
     }
 
@@ -80,6 +83,7 @@ public class RecipeHandler extends SQLiteOpenHelper {
             } while (cursor.moveToNext());
         }
         cursor.close();
+        db.close();
         return null;
     }
 
@@ -87,5 +91,6 @@ public class RecipeHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
+        db.close();
     }
 }

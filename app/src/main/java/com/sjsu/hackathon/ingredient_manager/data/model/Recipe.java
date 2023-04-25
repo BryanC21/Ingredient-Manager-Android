@@ -3,6 +3,7 @@ package com.sjsu.hackathon.ingredient_manager.data.model;
 import android.os.Build;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
@@ -54,6 +55,12 @@ public class Recipe implements Parcelable {
         this.servings = recipeJson.getInt("servings");
         this.ingredientList = ingredientList;
         this.instructionList = instructionList;
+        if (recipeJson.has("saved")) {
+            this.saved = recipeJson.getBoolean("saved");
+        } else {
+            this.saved = false;
+            recipeJson.put("saved", false);
+        }
         this.json = recipeJson;
     }
 
@@ -122,7 +129,25 @@ public class Recipe implements Parcelable {
     }
 
     public JSONObject getJson() {
-        return json;
+        JSONObject recipeJson = new JSONObject();
+        try {
+            recipeJson.put("id", this.id);
+            recipeJson.put("name", this.name);
+            recipeJson.put("servings", this.servings);
+            JSONArray ingredientList = new JSONArray();
+            for (RecipeIngredient recipeIngredient : this.ingredientList) {
+                ingredientList.put(recipeIngredient.toJson());
+            }
+            recipeJson.put("ingredients", ingredientList);
+            JSONArray instructionList = new JSONArray();
+            for (String instruction : this.instructionList) {
+                instructionList.put(instruction);
+            }
+            recipeJson.put("instructions", instructionList);
+        } catch (Exception e) {
+            Log.e("Json fail", e.getMessage());
+        }
+        return recipeJson;
     }
 
     public void setJson(JSONObject json) {
@@ -142,7 +167,7 @@ public class Recipe implements Parcelable {
     }
 
     public String toString() {
-        return "Recipe: " + name + " " + " " + servings;
+        return "Recipe: " + name + " " + " " + servings + " " + saved;
     }
 
     @Override

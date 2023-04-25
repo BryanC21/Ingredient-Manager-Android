@@ -73,7 +73,7 @@ public class recipe_details extends Fragment {
         //---------
         if (getArguments() != null) {
             Recipe recipe = getArguments().getParcelable("recipe");
-
+            System.out.println(recipe);
             // Name
             TextView name = rootView.findViewById(R.id.recipe_details_name);
             name.setText("Name: " + recipe.getName());
@@ -105,13 +105,16 @@ public class recipe_details extends Fragment {
                 public void onClick(View view) {
                     RecipeHandler recipeHandler = new RecipeHandler(getActivity());
                     if (recipe.isSaved()) {
+                        recipe.setSaved();
                         recipeHandler.removeData(recipe.getId());
                         button.setText("Save");
                     } else {
+                        recipe.setSaved();
+                        System.out.println("Add new fav");
+                        System.out.println(recipe);
                         recipeHandler.addNewData(recipe);
                         button.setText("Unsave");
                     }
-                    recipe.setSaved();
                 }
             });
         }
