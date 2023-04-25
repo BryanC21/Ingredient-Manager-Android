@@ -2,12 +2,17 @@ package com.sjsu.hackathon.ingredient_manager;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -23,6 +28,8 @@ import java.util.ArrayList;
 public class RecipeList extends Fragment {
 
     private View rootView;
+    private NavController navController;
+
     public RecipeList() {
         // Required empty public constructor
     }
@@ -36,6 +43,13 @@ public class RecipeList extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
     }
 
     @Override
@@ -56,5 +70,11 @@ public class RecipeList extends Fragment {
         }
 
         return rootView;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        navController.popBackStack(); // Navigate back to previous fragment
+        return true;
     }
 }

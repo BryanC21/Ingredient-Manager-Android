@@ -34,7 +34,7 @@ public class RecipeCell extends RecyclerView.ViewHolder {
 
                 NavOptions navOptions = new NavOptions.Builder()
                         .setLaunchSingleTop(true)
-                        .setPopUpTo(navController.getCurrentDestination().getId(), true)
+                        .setPopUpTo(navController.getCurrentDestination().getId(), false)
                         .build();
 
                 navController.navigate(R.id.action_fragment_recipe_list_to_fragment_recipe_details, bundle, navOptions);
