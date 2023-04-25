@@ -2,6 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/instructionList"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".recipe_details">
@@ -53,23 +54,7 @@
             android:textSize="20sp"
             android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/ingredientList" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/ingredientList"
-            android:layout_width="371dp"
-            android:layout_height="209dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_details_ingredients" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/instructionList"
-            android:layout_width="369dp"
-            android:layout_height="313dp"
-            android:layout_marginStart="16dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/recipe_details_instructions" />
+            app:layout_constraintTop_toBottomOf="@+id/ingredientListView" />
 
         <Button
             android:id="@+id/recipe_details_save_btn"
@@ -87,6 +72,27 @@
             android:textSize="10sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <ListView
+            android:id="@+id/ingredientListView"
+            android:layout_width="371dp"
+            android:layout_height="205dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_details_ingredients" />
+
+        <ListView
+            android:id="@+id/instructionListView"
+            android:layout_width="376dp"
+            android:layout_height="297dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="24dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/recipe_details_instructions" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -5,7 +5,9 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,16 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.sjsu.hackathon.ingredient_manager.data.handler.RecipeHandler;
-import com.sjsu.hackathon.ingredient_manager.data.listener.RecipeListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Recipe;
-import com.sjsu.hackathon.ingredient_manager.data.model.RecipeIngredient;
 import com.sjsu.hackathon.ingredient_manager.databinding.FragmentRecipeDetailsBinding;
-
-import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -86,14 +82,18 @@ public class recipe_details extends Fragment {
             TextView servings = rootView.findViewById(R.id.recipe_details_servings);
             servings.setText("Servings: " + recipe.getServings());
 
-            try {
-                RecyclerView recyclerView = rootView.findViewById(R.id.ingredientList);
-                RecipeIngredientListAdapter adapter = new RecipeIngredientListAdapter(recipe.getIngredientList());
-                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                recyclerView.setAdapter(adapter);
-            } catch (Exception e) {
-                System.out.println(e);
-            }
+            ListView ingredientListView = rootView.findViewById(R.id.ingredientListView);
+            RecipeIngredientListAdapter recipeIngredientListAdapter =
+                    new RecipeIngredientListAdapter(getContext(),
+                    recipe.getIngredientList());
+            ingredientListView.setAdapter(recipeIngredientListAdapter);
+
+            ListView instructionListView = rootView.findViewById(R.id.instructionListView);
+            RecipeInstructionListAdapter recipeInstructionListAdapter =
+                    new RecipeInstructionListAdapter(getContext(),
+                    recipe.getInstructionList());
+            instructionListView.setAdapter(recipeInstructionListAdapter);
+
 
             Button button = rootView.findViewById(R.id.recipe_details_save_btn);
             if (recipe.isSaved()) {
@@ -106,8 +106,10 @@ public class recipe_details extends Fragment {
                     RecipeHandler recipeHandler = new RecipeHandler(getActivity());
                     if (recipe.isSaved()) {
                         recipeHandler.removeData(recipe.getId());
+                        button.setText("Save");
                     } else {
                         recipeHandler.addNewData(recipe);
+                        button.setText("Unsave");
                     }
                     recipe.setSaved();
                 }

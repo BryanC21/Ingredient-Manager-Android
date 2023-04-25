@@ -1,9 +1,12 @@
 package com.sjsu.hackathon.ingredient_manager;
 
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -14,37 +17,27 @@ import com.sjsu.hackathon.ingredient_manager.data.model.RecipeIngredient;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class RecipeIngredientListAdapter extends RecyclerView.Adapter<OtherRecipeCell>  {
+public class RecipeIngredientListAdapter extends ArrayAdapter<RecipeIngredient>  {
 
     RecipeIngredient dataStore;
     ArrayList<RecipeIngredient> list;
 
-    public RecipeIngredientListAdapter(){
+    public RecipeIngredientListAdapter(Context context, ArrayList<RecipeIngredient> list){
+        super(context, 0, list);
         list = new ArrayList<>();
     }
-
-    public RecipeIngredientListAdapter(ArrayList<RecipeIngredient> list){
-        this.list = list;
-    }
-
     @Override
-    public OtherRecipeCell onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.recipe_ingredient_cell, parent, false);
-        return new OtherRecipeCell(view);
-    }
-
-    @Override
-    public void onBindViewHolder(@NonNull OtherRecipeCell holder, int position) {
-        RecipeIngredient data = list.get(position);
-        holder.setDetails(data);
-        holder.nameTextView.setText(data.getName());
-        holder.quantityTextView.setText(data.getQuantity());
-        holder.preparationTextView.setText(data.getPreparation());
-    }
-
-    @Override
-    public int getItemCount() {
-        return list.size();
+    public View getView(int position, View convertView, ViewGroup parent) {
+        RecipeIngredient recipeIngredient = getItem(position);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.recipe_ingredient_cell, parent, false);
+        }
+        TextView nameView = convertView.findViewById(R.id.recipe_ingredient_name);
+        nameView.setText(recipeIngredient.getName());
+        TextView quantityView = convertView.findViewById(R.id.recipe_ingredient_quantity);
+        quantityView.setText(recipeIngredient.getQuantity());
+        TextView preparationView = convertView.findViewById(R.id.recipe_ingredient_preparation);
+        preparationView.setText(recipeIngredient.getPreparation());
+        return convertView;
     }
 }
