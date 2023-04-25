@@ -31,7 +31,6 @@ public class RecipeHandler extends SQLiteOpenHelper {
                 + ID_COL + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + DATA_COL + " TEXT)";
         db.execSQL(query);
-        db.close();
     }
 
     public void addNewData(Recipe recipe) {
@@ -92,6 +91,5 @@ public class RecipeHandler extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
-        db.close();
     }
 }
