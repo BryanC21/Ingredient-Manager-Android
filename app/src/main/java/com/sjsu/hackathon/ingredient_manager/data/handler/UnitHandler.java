@@ -62,8 +62,12 @@ public class UnitHandler implements UserListener {
                     if (task.isSuccessful()) {
                         Unit data = task.getResult().getValue(Unit.class);
                         System.out.println(data);
-                        data.setId(task.getResult().getKey());
-                        listener.onUnitGetFinish(data);
+                        if (data != null) {
+                            data.setId(task.getResult().getKey());
+                            listener.onUnitGetFinish(data);
+                        } else {
+                            listener.onDataFail("Corrupted data!");
+                        }
                     } else {
                         listener.onDataFail("No data");
                     }

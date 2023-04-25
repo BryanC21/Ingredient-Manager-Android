@@ -60,8 +60,12 @@ public class CategoryHandler implements UserListener {
                 task -> {
                     if (task.isSuccessful()) {
                         Category data = task.getResult().getValue(Category.class);
-                        data.setId(task.getResult().getKey());
-                        listener.onCategoryGetFinish(data);
+                        if (data != null) {
+                            data.setId(task.getResult().getKey());
+                            listener.onCategoryGetFinish(data);
+                        } else {
+                            listener.onDataFail("Corrupted data");
+                        }
                     } else {
                         listener.onDataFail("No data");
                     }

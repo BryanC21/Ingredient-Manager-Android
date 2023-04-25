@@ -59,8 +59,12 @@ public class LocationHandler implements UserListener {
                 task -> {
                     if (task.isSuccessful()) {
                         Location data = task.getResult().getValue(Location.class);
-                        data.setId(task.getResult().getKey());
-                        listener.onLocationGetFinish(data);
+                        if (data != null) {
+                            data.setId(task.getResult().getKey());
+                            listener.onLocationGetFinish(data);
+                        } else {
+                            listener.onDataFail("Corrupted data");
+                        }
                     } else {
                         listener.onDataFail("No data");
                     }
