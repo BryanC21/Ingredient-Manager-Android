@@ -16,7 +16,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class RecipeHandler extends SQLiteOpenHelper {
-    private static final String DB_NAME = "IngredientManager";
+    private static final String DB_NAME = "IngredientDB";
     private static final int DB_VERSION = 3;
     private static final String TABLE_NAME = "recipes";
     private static final String ID_COL = "id";
