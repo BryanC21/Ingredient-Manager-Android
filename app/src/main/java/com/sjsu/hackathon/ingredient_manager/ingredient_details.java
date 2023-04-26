@@ -115,7 +115,7 @@ public class ingredient_details extends Fragment {
             TextView createTime = rootView.findViewById(R.id.ingredient_details_created);
             createTime.setText("Created: " + this.createTime.toString());
 
-            // Image TODO: add image
+            // Image
             /*img = getArguments().getString("img");
             TextView imgView = rootView.findViewById(R.id.ingredient_details_img);
             imgView.setText("Image: " + img);*/
