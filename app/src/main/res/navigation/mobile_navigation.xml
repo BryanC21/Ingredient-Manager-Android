@@ -61,17 +61,17 @@
     <fragment
         android:id="@+id/navigation_favorite"
         android:name="com.sjsu.hackathon.ingredient_manager.FavoritesFragment"
-        android:label=""
+        android:label="Favorites"
         tools:layout="@layout/fragment_favorites"
         >
 
     </fragment>
 
     <fragment
-        android:id="@+id/navigation_logout"
-        android:name="com.sjsu.hackathon.ingredient_manager.ui.LogoutFragment"
-        android:label=""
-        tools:layout="@layout/fragment_logout"
+        android:id="@+id/navigation_account"
+        android:name="com.sjsu.hackathon.ingredient_manager.Account"
+        android:label="Account"
+        tools:layout="@layout/fragment_account"
         >
 
     </fragment>

@@ -18,8 +18,6 @@ import com.sjsu.hackathon.ingredient_manager.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link LogoutFragment#newInstance} factory method to
- * create an instance of this fragment.
  */
 public class LogoutFragment extends Fragment {
 
