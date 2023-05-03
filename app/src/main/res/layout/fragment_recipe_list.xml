@@ -9,43 +9,52 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="16dp">
+        android:padding="8dp">
 
-        <Button
+        <com.google.android.material.button.MaterialButton
             android:id="@+id/regen_button"
-            android:layout_width="205dp"
-            android:layout_height="57dp"
-            android:layout_marginTop="12dp"
+            android:layout_width="222dp"
+            android:layout_height="69dp"
+            android:layout_margin="24dp"
             android:text="Generate more"
+            android:textSize="16dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"></Button>
-
-        <ProgressBar
-            android:id="@+id/notifications_loading2"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="52dp"
-            android:indeterminate="true"
-            android:visibility="invisible"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.5" />
+            app:iconTint="?attr/colorPrimaryVariant"
+            app:strokeColor="?attr/colorPrimary"
+            app:cornerRadius="8dp"
+            ></com.google.android.material.button.MaterialButton>
+
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recipe_list_recycler_view"
-            android:layout_width="412dp"
-            android:layout_height="649dp"
+            android:layout_width="410dp"
+            android:layout_height="640dp"
             android:layout_marginTop="89dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
+
+        <com.google.android.material.progressindicator.CircularProgressIndicator
+            android:id="@+id/notifications_loading2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:indicatorSize="132dp"
+            app:indicatorColor="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintVertical_bias="0.5" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

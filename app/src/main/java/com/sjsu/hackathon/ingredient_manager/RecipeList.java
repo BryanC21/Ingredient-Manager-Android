@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sjsu.hackathon.ingredient_manager.controller.RecipeController;
 import com.sjsu.hackathon.ingredient_manager.data.listener.RecipeListener;
 import com.sjsu.hackathon.ingredient_manager.data.model.Ingredient;
@@ -36,6 +37,8 @@ public class RecipeList extends Fragment implements RecipeListener {
     private View rootView;
 
     private boolean isRecipeControllerExecuted = false;
+
+    private BottomNavigationView bottomNavigationView;
 
     private boolean loadingLock = false;
 
@@ -63,6 +66,21 @@ public class RecipeList extends Fragment implements RecipeListener {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        navController = NavHostFragment.findNavController(this);
+        bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.fragment_recipe_list) {
+                bottomNavigationView.setVisibility(View.GONE);
+            } else {
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override

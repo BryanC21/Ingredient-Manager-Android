@@ -15,12 +15,14 @@ import androidx.recyclerview.widget.RecyclerView;
 public class RecipeCell extends RecyclerView.ViewHolder {
 
     public TextView titleTextView;
+    public TextView servingsTextView;
 
     public Recipe recipe;
 
     public RecipeCell(@NonNull View itemView) {
         super(itemView);
         titleTextView = itemView.findViewById(R.id.title_text_view3);
+        servingsTextView = itemView.findViewById(R.id.title_text_view4);
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

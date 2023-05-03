@@ -67,4 +67,6 @@ dependencies {
 
     implementation 'com.amazonaws:aws-android-sdk-core:2.65.0'
     implementation 'com.amazonaws:aws-android-sdk-rekognition:2.65.0'
+    implementation 'com.google.android.material:material:1.9.0-rc01'
+
 }
