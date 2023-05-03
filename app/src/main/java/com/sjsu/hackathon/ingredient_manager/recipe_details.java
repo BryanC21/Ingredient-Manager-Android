@@ -1,6 +1,7 @@
 package com.sjsu.hackathon.ingredient_manager;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,6 +17,7 @@ import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sjsu.hackathon.ingredient_manager.data.handler.RecipeHandler;
 import com.sjsu.hackathon.ingredient_manager.data.model.Recipe;
 import com.sjsu.hackathon.ingredient_manager.databinding.FragmentRecipeDetailsBinding;
@@ -31,6 +33,8 @@ public class recipe_details extends Fragment {
     private View rootView;
 
     private NavController navController;
+
+    private BottomNavigationView bottomNavigationView;
 
     public recipe_details() {
         // Required empty public constructor
@@ -49,15 +53,27 @@ public class recipe_details extends Fragment {
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        navController = NavHostFragment.findNavController(this);
+    public boolean onOptionsItemSelected(MenuItem item) {
+        navController.popBackStack(); // Navigate back to previous fragment
+            return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-            navController.popBackStack(); // Navigate back to previous fragment
-            return true;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        navController = NavHostFragment.findNavController(this);
+        bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+
+        Log.d("RecipeDetails", bottomNavigationView.toString());
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.fragment_recipe_details) {
+                bottomNavigationView.setVisibility(View.GONE);
+            } else {
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
@@ -69,6 +85,10 @@ public class recipe_details extends Fragment {
 
         // Inflate the layout for this fragment
         rootView =  inflater.inflate(R.layout.fragment_recipe_details, container, false);
+
+        // Bottom Navigation
+        BottomNavigationView bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+        bottomNavigationView.setVisibility(View.GONE);
 
         //---------
         if (getArguments() != null) {

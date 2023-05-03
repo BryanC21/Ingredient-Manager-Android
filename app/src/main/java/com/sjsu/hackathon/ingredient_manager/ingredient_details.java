@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sjsu.hackathon.ingredient_manager.data.handler.CategoryHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
@@ -56,6 +57,8 @@ public class ingredient_details extends Fragment {
 
     private NavController navController;
 
+    private BottomNavigationView bottomNavigationView;
+
     public ingredient_details() {
         // Required empty public constructor
     }
@@ -76,6 +79,17 @@ public class ingredient_details extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         navController = NavHostFragment.findNavController(this);
+        bottomNavigationView = getActivity().findViewById(R.id.nav_view);
+
+        Log.d("RecipeDetails", bottomNavigationView.toString());
+
+        navController.addOnDestinationChangedListener((controller, destination, arguments) -> {
+            if (destination.getId() == R.id.fragment_ingredient_details) {
+                bottomNavigationView.setVisibility(View.GONE);
+            } else {
+                bottomNavigationView.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     @Override
