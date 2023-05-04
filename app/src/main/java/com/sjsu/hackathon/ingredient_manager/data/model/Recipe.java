@@ -39,10 +39,13 @@ public class Recipe implements Parcelable {
         JSONArray ingredientListJson = recipeJson.getJSONArray("ingredients");
         for (int j = 0; j < ingredientListJson.length(); j++) {
             JSONObject recipeIngredientJson = ingredientListJson.getJSONObject(j);
+            String preparation = "";
+            if (recipeIngredientJson.has("preparation")) {
+                preparation = recipeIngredientJson.getString("preparation");
+            }
             RecipeIngredient recipeIngredient = new RecipeIngredient(
                     recipeIngredientJson.getString("name"),
-                    recipeIngredientJson.getString("quantity"),
-                    recipeIngredientJson.getString("preparation"));
+                    recipeIngredientJson.getString("quantity"), preparation);
             ingredientList.add(recipeIngredient);
         }
 
