@@ -21,6 +21,8 @@ public class RecipeController implements ChatgptListener {
     private Context context;
     private RecipeListener recipeListener;
     private ArrayList<Ingredient> list;
+
+    private String cuisine;
     private int number;
     private int retry;
 
@@ -36,13 +38,18 @@ public class RecipeController implements ChatgptListener {
         messages = new JSONArray();
     }
 
-    public void getRecipe(ArrayList<Ingredient> list, int number) {
+    public void getRecipe(ArrayList<Ingredient> list, int number, String cuisine) {
         this.list = list;
         this.number = number;
+        this.cuisine = cuisine;
         String message = "Create a new recipe list in JSONArray format containing " +
                 String.valueOf(number) + " recipes in this format {'name', 'servings', " +
                 "'ingredients':[{'name', 'quantity', " +
-                "'preparation'}], 'instructions': []} using ";
+                "'preparation'}], 'instructions': []} ";
+        if (cuisine != "") {
+            message += " in " + cuisine + " cuisine ";
+        }
+        message += " using ";
         for (Ingredient ingredient : list) {
             message += ingredient.getName() + ", ";
         }
@@ -80,7 +87,7 @@ public class RecipeController implements ChatgptListener {
 
             if (retry-- > 0) {
                 Log.e("Retrying Chatgpt", "Retry Left: " + Integer.toString(retry));
-                getRecipe(list, number);
+                getRecipe(list, number, cuisine);
             } else {
                 recipeListener.onDataFail(error.getMessage());
             }

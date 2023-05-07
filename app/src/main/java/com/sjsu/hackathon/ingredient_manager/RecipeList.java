@@ -100,7 +100,7 @@ public class RecipeList extends Fragment implements RecipeListener {
                     rootView.findViewById(R.id.notifications_loading2).setVisibility(View.VISIBLE);
                     try {
                         loadingLock = true;
-                        recipeController.getRecipe(ingredientList, 2);
+                        recipeController.getRecipe(ingredientList, 2, "Indian");
                     } catch (Exception e) {
                         e.printStackTrace();
                         loadingLock = false;
@@ -128,7 +128,7 @@ public class RecipeList extends Fragment implements RecipeListener {
             rootView.findViewById(R.id.notifications_loading2).setVisibility(View.VISIBLE);
             try {
                 loadingLock = true;
-                recipeController.getRecipe(ingredientList, 2);
+                recipeController.getRecipe(ingredientList, 2, "Indian");
             } catch (Exception e) {
                 e.printStackTrace();
                 Toast.makeText(rootView.getContext(), "Generate Recipes Failed. Try again.", Toast.LENGTH_LONG).show();
