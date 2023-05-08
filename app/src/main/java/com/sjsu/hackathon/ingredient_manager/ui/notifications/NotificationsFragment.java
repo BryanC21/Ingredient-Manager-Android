@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +42,7 @@ import java.util.Date;
 public class NotificationsFragment extends Fragment implements RecipeListener {
 
     private FragmentNotificationsBinding binding;
+    private EditText cuisineField;
     private String user = FirebaseAuth.getInstance().getCurrentUser().getUid();
     private DatabaseReference mDatabase;
 
@@ -63,6 +65,7 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
 
         mDatabase = FirebaseDatabase.getInstance().getReference("dev").child(user).child("ingredients");
         submit = binding.button2;
+        cuisineField = binding.cuisineField;
         addIngredientEventListener(mDatabase);
 
         final TextView textView = binding.textNotifications;
@@ -104,6 +107,7 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
                                 */
                                 Bundle bundle = new Bundle();
                                 bundle.putStringArrayList("ingredients", selected);
+                                bundle.putString("cuisine", cuisineField.getText().toString());
 
                                 NavOptions navOptions = new NavOptions.Builder()
                                         .setLaunchSingleTop(true)
@@ -165,6 +169,7 @@ public class NotificationsFragment extends Fragment implements RecipeListener {
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList("recipes", recipeList);
         bundle.putStringArrayList("ingredients", selected);
+        bundle.putString("cuisine", cuisineField.getText().toString());
 
         NavOptions navOptions = new NavOptions.Builder()
                 .setLaunchSingleTop(true)

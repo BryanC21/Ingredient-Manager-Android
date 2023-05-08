@@ -8,11 +8,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/check_list_ing"
-        android:layout_width="415dp"
-        android:layout_height="588dp"
-        android:layout_marginTop="120dp"
+        android:layout_width="409dp"
+        android:layout_height="562dp"
+        android:layout_marginTop="128dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -20,13 +19,13 @@
         android:id="@+id/button2"
         android:layout_width="222dp"
         android:layout_height="69dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginTop="56dp"
         android:text="Find Recipes"
         android:textSize="24dp"
         app:backgroundTint="?attr/colorPrimaryVariant"
         app:cornerRadius="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.042"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -53,5 +52,32 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="8dp"
         tools:text="Recipes" />
+
+    <EditText
+        android:id="@+id/cuisine_field"
+        android:layout_width="165dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="84dp"
+        android:layout_marginEnd="12dp"
+        android:ems="10"
+        android:inputType="text"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cuisine_text"
+        android:layout_width="165dp"
+        android:layout_height="19dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="11dp"
+        android:text="Cuisine (optional)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/button2"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
