@@ -6,9 +6,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -16,10 +14,15 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.fragment.NavHostFragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.sjsu.hackathon.ingredient_manager.data.handler.RecipeHandler;
 import com.sjsu.hackathon.ingredient_manager.data.model.Recipe;
+import com.sjsu.hackathon.ingredient_manager.data.model.RecipeIngredientListAdapter;
+import com.sjsu.hackathon.ingredient_manager.data.model.RecipeInstructionListAdapter;
 import com.sjsu.hackathon.ingredient_manager.databinding.FragmentRecipeDetailsBinding;
 
 /**
@@ -102,17 +105,18 @@ public class recipe_details extends Fragment {
             TextView servings = rootView.findViewById(R.id.recipe_details_servings);
             servings.setText("Servings: " + recipe.getServings());
 
-            ListView ingredientListView = rootView.findViewById(R.id.ingredientListView);
-            RecipeIngredientListAdapter recipeIngredientListAdapter =
-                    new RecipeIngredientListAdapter(getContext(),
-                    recipe.getIngredientList());
-            ingredientListView.setAdapter(recipeIngredientListAdapter);
+            RecyclerView.ItemDecoration itemDecoration = new
+                    DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL);
 
-            ListView instructionListView = rootView.findViewById(R.id.instructionListView);
-            RecipeInstructionListAdapter recipeInstructionListAdapter =
-                    new RecipeInstructionListAdapter(getContext(),
-                    recipe.getInstructionList());
-            instructionListView.setAdapter(recipeInstructionListAdapter);
+            RecyclerView ingredientListView = rootView.findViewById(R.id.ingredientListView);
+            ingredientListView.addItemDecoration(itemDecoration);
+            ingredientListView.setAdapter(new RecipeIngredientListAdapter(recipe.getIngredientList()));
+            ingredientListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+            RecyclerView instructionListView = rootView.findViewById(R.id.instructionListView);
+            instructionListView.addItemDecoration(itemDecoration);
+            instructionListView.setAdapter(new RecipeInstructionListAdapter(recipe.getInstructionList()));
+            instructionListView.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
 
             Button button = rootView.findViewById(R.id.recipe_details_save_btn);
