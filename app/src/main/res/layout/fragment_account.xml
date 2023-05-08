@@ -6,36 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="377dp"
-        android:layout_height="84dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="14dp"
-        android:layout_marginBottom="67dp"
-        android:orientation="vertical">
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/materialButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="16dp"
-            android:text="Log Out"
-            android:textSize="24dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.904" />
-
-    </LinearLayout>
-
     <ScrollView
-        android:layout_width="385dp"
-        android:layout_height="453dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="87dp"
+        android:layout_marginBottom="50dp"
         android:fillViewport="true"
         tools:context=".Account">
 
@@ -44,48 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:layout_editor_absoluteY="1dp">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/user_name_text_view"
-                android:layout_width="304dp"
-                android:layout_height="68dp"
-                android:layout_margin="16dp"
-                android:text="JOHN SNOW"
-                android:textAlignment="center"
-                android:textSize="48dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.262"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/list_units_text"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:text="Units"
-                android:textAlignment="textStart"
-                android:textSize="32dp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toTopOf="@+id/user_unit_list"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.593"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_name_text_view"
-                app:layout_constraintVertical_bias="0.0" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/user_unit_list"
-                android:layout_width="361dp"
-                android:layout_height="113dp"
-                android:layout_marginTop="88dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.384"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_name_text_view" />
 
             <EditText
                 android:id="@+id/addNewUnit"
@@ -96,9 +29,22 @@
                 android:hint="Add New Item"
                 android:inputType="textPersonName"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.24"
+                app:layout_constraintHorizontal_bias="0.273"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/user_unit_list" />
+
+            <EditText
+                android:id="@+id/addNewLocation"
+                android:layout_width="306dp"
+                android:layout_height="49dp"
+                android:layout_marginTop="20dp"
+                android:ems="10"
+                android:hint="Add New Item"
+                android:inputType="textPersonName"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.273"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_locations_list" />
 
             <ImageButton
                 android:id="@+id/submitAddNewItem"
@@ -112,6 +58,80 @@
                 app:layout_constraintStart_toEndOf="@+id/addNewUnit"
                 app:layout_constraintTop_toBottomOf="@+id/user_unit_list" />
 
+            <ImageButton
+                android:id="@+id/submitAddNewLocation"
+                android:layout_width="72dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="20dp"
+                android:background="@android:color/transparent"
+                android:src="@drawable/baseline_add_24"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/addNewLocation"
+                app:layout_constraintTop_toBottomOf="@+id/user_locations_list" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/user_unit_list"
+                android:layout_width="361dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.385"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/list_units_text" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/user_locations_list"
+                android:layout_width="361dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.385"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/list_locations_text" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/materialButton"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="50dp"
+                android:text="Log Out"
+                android:textSize="24dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/addNewLocation" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/list_units_text"
+                android:layout_width="411dp"
+                android:layout_height="44dp"
+                android:layout_margin="16dp"
+                android:text="Units"
+                android:textAlignment="textStart"
+                android:textSize="32dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias=".111"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/user_name_text_view" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/user_name_text_view"
+                android:layout_width="304dp"
+                android:layout_height="68dp"
+                android:layout_margin="16dp"
+                android:text="JOHN SNOW"
+                android:textAlignment="center"
+                android:textSize="48dp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/list_locations_text"
                 android:layout_width="353dp"
@@ -122,40 +142,9 @@
                 android:textSize="32dp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.111"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/addNewUnit" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/user_locations_list"
-                android:layout_width="359dp"
-                android:layout_height="218dp"
-                android:layout_marginTop="43dp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/list_locations_text" />
-
-            <EditText
-                android:id="@+id/addNewLocation"
-                android:layout_width="306dp"
-                android:layout_height="49dp"
-                android:ems="10"
-                android:hint="Add New Item"
-                android:inputType="textPersonName"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/user_locations_list" />
-
-            <ImageButton
-                android:id="@+id/submitAddNewLocation"
-                android:layout_width="72dp"
-                android:layout_height="36dp"
-                android:layout_marginTop="6dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/baseline_add_24"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/addNewLocation"
-                app:layout_constraintTop_toBottomOf="@+id/user_locations_list" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
