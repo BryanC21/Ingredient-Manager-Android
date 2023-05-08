@@ -53,7 +53,7 @@ public class RecipeController implements ChatgptListener {
         for (Ingredient ingredient : list) {
             message += ingredient.getName() + ", ";
         }
-        message += "without any explanation";
+        message += ". assume i have all condiments. avoid any prompt prefixes and give the response directly";
         chatgpt.sendMessage(message, this, messages);
     }
 

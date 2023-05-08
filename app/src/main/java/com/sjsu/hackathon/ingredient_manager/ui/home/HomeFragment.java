@@ -1,7 +1,6 @@
 package com.sjsu.hackathon.ingredient_manager.ui.home;
 
 import android.app.DatePickerDialog;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +22,6 @@ import androidx.navigation.NavController;
 import androidx.navigation.NavDestination;
 import androidx.navigation.Navigation;
 
-import com.firebase.ui.auth.AuthUI;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.sjsu.hackathon.ingredient_manager.FirebaseUIActivity;
 import com.sjsu.hackathon.ingredient_manager.MainActivity;
 import com.sjsu.hackathon.ingredient_manager.data.handler.CategoryHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.IngredientHandler;

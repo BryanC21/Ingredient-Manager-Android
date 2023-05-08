@@ -11,19 +11,10 @@ import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.sjsu.hackathon.ingredient_manager.controller.AddDefaultController;
-import com.sjsu.hackathon.ingredient_manager.data.handler.CategoryHandler;
-import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
-import com.sjsu.hackathon.ingredient_manager.data.handler.UnitHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.UserHandler;
-import com.sjsu.hackathon.ingredient_manager.data.listener.CategoryListener;
-import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
-import com.sjsu.hackathon.ingredient_manager.data.listener.UnitListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.UserListener;
-import com.sjsu.hackathon.ingredient_manager.data.model.Category;
-import com.sjsu.hackathon.ingredient_manager.data.model.Location;
 import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
