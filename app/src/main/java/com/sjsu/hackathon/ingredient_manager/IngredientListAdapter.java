@@ -4,12 +4,10 @@ package com.sjsu.hackathon.ingredient_manager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.sjsu.hackathon.ingredient_manager.data.handler.UnitHandler;
 import com.sjsu.hackathon.ingredient_manager.data.listener.UnitListener;
-import com.sjsu.hackathon.ingredient_manager.data.model.Ingredient;
 import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
 
 import java.util.ArrayList;

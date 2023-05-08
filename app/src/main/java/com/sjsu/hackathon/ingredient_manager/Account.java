@@ -14,22 +14,27 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.UnitHandler;
+import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
 import com.sjsu.hackathon.ingredient_manager.data.listener.UnitListener;
-import com.sjsu.hackathon.ingredient_manager.data.model.Recipe;
+import com.sjsu.hackathon.ingredient_manager.data.model.Location;
+import com.sjsu.hackathon.ingredient_manager.data.model.LocationItem;
+import com.sjsu.hackathon.ingredient_manager.data.model.LocationListAdapter;
 import com.sjsu.hackathon.ingredient_manager.data.model.Unit;
 import com.sjsu.hackathon.ingredient_manager.data.model.UnitItem;
 import com.sjsu.hackathon.ingredient_manager.data.model.UnitListAdapter;
 import com.sjsu.hackathon.ingredient_manager.databinding.FragmentAccountBinding;
-import com.sjsu.hackathon.ingredient_manager.databinding.FragmentHomeBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class Account extends Fragment implements UnitListener {
+public class Account extends Fragment implements UnitListener, LocationListener {
     private View rootView;
-    private UnitHandler handler;
-    private RecyclerView recyclerView;
+    private UnitHandler unitHandler;
+    private LocationHandler locationHandler;
+    private RecyclerView unitRecyclerView;
+    private RecyclerView locationRecyclerView;
     private FragmentAccountBinding binding;
 
     public Account() {
@@ -56,28 +61,47 @@ public class Account extends Fragment implements UnitListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         rootView =  inflater.inflate(R.layout.fragment_account, container, false);
-        handler = new UnitHandler(this);
-        handler.getAll();
+        unitHandler = new UnitHandler(this);
+        unitHandler.getAll();
+
+        locationHandler = new LocationHandler(this);
+        locationHandler.getAll();
+
         binding = FragmentAccountBinding.inflate(inflater, container, false);
 
         try {
-            recyclerView = rootView.findViewById(R.id.user_unit_list);
+            unitRecyclerView = rootView.findViewById(R.id.user_unit_list);
             RecyclerView.ItemDecoration itemDecoration = new
                     DividerItemDecoration(this.getContext(), DividerItemDecoration.VERTICAL);
-            recyclerView.addItemDecoration(itemDecoration);
+            unitRecyclerView.addItemDecoration(itemDecoration);
+
+            locationRecyclerView = rootView.findViewById(R.id.user_locations_list);
+            locationRecyclerView.addItemDecoration(itemDecoration);
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        ImageButton button = rootView.findViewById(R.id.submitAddNewItem);
+        ImageButton unitButton = rootView.findViewById(R.id.submitAddNewItem);
         EditText unitText = rootView.findViewById(R.id.addNewUnit);
-        button.setOnClickListener(v -> {
+        unitButton.setOnClickListener(v -> {
             System.out.println("here");
             String unitStr = unitText.getText().toString();
             System.out.println(unitStr);
             if (!unitStr.isEmpty()) {
-                handler.add(unitStr);
+                unitHandler.add(unitStr);
                 unitText.setText("");
+            }
+        });
+
+        ImageButton locationButton = rootView.findViewById(R.id.submitAddNewLocation);
+        EditText locationText = rootView.findViewById(R.id.addNewLocation);
+        locationButton.setOnClickListener(v -> {
+            System.out.println("here");
+            String locationStr = locationText.getText().toString();
+            System.out.println(locationStr);
+            if (!locationStr.isEmpty()) {
+                locationHandler.add(locationStr);
+                locationText.setText("");
             }
         });
 
@@ -89,10 +113,17 @@ public class Account extends Fragment implements UnitListener {
     public void onDataSuccess(String reason) {
         if (reason.equals("Remove Success")) {
             Toast.makeText(this.getContext(), "Unit Removed Successfully", Toast.LENGTH_SHORT).show();
+            unitHandler.getAll();
         } else if (reason.equals("Success")) {
             Toast.makeText(this.getContext(), "Unit Added Successfully", Toast.LENGTH_SHORT).show();
+            unitHandler.getAll();
+        } else if (reason.equals("Location Remove Success")) {
+            Toast.makeText(this.getContext(), "Location Removed Successfully", Toast.LENGTH_SHORT).show();
+            locationHandler.getAll();
+        } else if (reason.equals("Location Success")) {
+            Toast.makeText(this.getContext(), "Location Added Successfully", Toast.LENGTH_SHORT).show();
+            locationHandler.getAll();
         }
-        handler.getAll();
     }
 
     @Override
@@ -107,13 +138,30 @@ public class Account extends Fragment implements UnitListener {
             h.add(new UnitItem(unit));
         });
 
-        UnitListAdapter adapter = new UnitListAdapter(h, handler);
-        recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        UnitListAdapter adapter = new UnitListAdapter(h, unitHandler);
+        unitRecyclerView.setAdapter(adapter);
+        unitRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
     }
 
     @Override
     public void onUnitGetFinish(Unit data) {
+
+    }
+
+    @Override
+    public void onLocationGetAllFinish(ArrayList<Location> dataList) {
+        List<LocationItem> h = new ArrayList<>();
+        dataList.stream().iterator().forEachRemaining(location -> {
+            h.add(new LocationItem(location));
+        });
+
+        LocationListAdapter adapter = new LocationListAdapter(h, locationHandler);
+        locationRecyclerView.setAdapter(adapter);
+        locationRecyclerView.setLayoutManager(new LinearLayoutManager(this.getContext()));
+    }
+
+    @Override
+    public void onLocationGetFinish(Location data) {
 
     }
 }

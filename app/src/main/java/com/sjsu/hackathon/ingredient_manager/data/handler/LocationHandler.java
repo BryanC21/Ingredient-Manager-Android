@@ -29,9 +29,9 @@ public class LocationHandler implements UserListener {
         list.setValue(data).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
-                        listener.onDataSuccess("Success");
+                        listener.onDataSuccess("Location Success");
                     } else {
-                        listener.onDataFail("Fail");
+                        listener.onDataFail("Location Fail");
                     }
                 }
         );
@@ -49,7 +49,7 @@ public class LocationHandler implements UserListener {
                         }
                         listener.onLocationGetAllFinish(list);
                     } else {
-                        listener.onDataFail("No data");
+                        listener.onDataFail("Location No data");
                     }
                 });
     }
@@ -63,10 +63,10 @@ public class LocationHandler implements UserListener {
                             data.setId(task.getResult().getKey());
                             listener.onLocationGetFinish(data);
                         } else {
-                            listener.onDataFail("Corrupted data");
+                            listener.onDataFail("Location Corrupted data");
                         }
                     } else {
-                        listener.onDataFail("No data");
+                        listener.onDataFail("Location No data");
                     }
                 });
     }
@@ -76,9 +76,9 @@ public class LocationHandler implements UserListener {
         dbRef.child(id).setValue(data).addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
-                        listener.onDataSuccess("Edit Success");
+                        listener.onDataSuccess("Location Edit Success");
                     } else {
-                        listener.onDataFail("Edit Fail");
+                        listener.onDataFail("Location Edit Fail");
                     }
                 }
         );
@@ -88,9 +88,9 @@ public class LocationHandler implements UserListener {
         dbRef.child(id).removeValue().addOnCompleteListener(
                 task -> {
                     if (task.isSuccessful()) {
-                        listener.onDataSuccess("Remove Success");
+                        listener.onDataSuccess("Location Remove Success");
                     } else {
-                        listener.onDataFail("Remove Fail");
+                        listener.onDataFail("Location Remove Fail");
                     }
                 }
         );
