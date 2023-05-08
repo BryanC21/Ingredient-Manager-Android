@@ -3,15 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/favorite_item_name"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="0dp"
+    android:paddingTop="16dp">
 
     <TextView
         android:id="@+id/favorite_recipe_name"
         android:layout_width="327dp"
         android:layout_height="51dp"
-        android:paddingTop="10dp"
         android:text="list_item"
-        android:textSize="20sp"
+        android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.117"

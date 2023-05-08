@@ -1,5 +1,6 @@
 package com.sjsu.hackathon.ingredient_manager;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,10 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.sjsu.hackathon.ingredient_manager.data.handler.LocationHandler;
 import com.sjsu.hackathon.ingredient_manager.data.handler.UnitHandler;
 import com.sjsu.hackathon.ingredient_manager.data.listener.LocationListener;
@@ -36,6 +41,10 @@ public class Account extends Fragment implements UnitListener, LocationListener 
     private RecyclerView unitRecyclerView;
     private RecyclerView locationRecyclerView;
     private FragmentAccountBinding binding;
+
+    private TextView username;
+
+    private Button logoutButton;
 
     public Account() {
         // Required empty public constructor
@@ -60,9 +69,27 @@ public class Account extends Fragment implements UnitListener, LocationListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        rootView =  inflater.inflate(R.layout.fragment_account, container, false);
+        rootView = inflater.inflate(R.layout.fragment_account, container, false);
         unitHandler = new UnitHandler(this);
         unitHandler.getAll();
+
+        // Change User Name
+        FirebaseAuth mAuth = FirebaseAuth.getInstance();
+        FirebaseUser user = mAuth.getCurrentUser();
+        String userName = user.getDisplayName();
+        username = rootView.findViewById(R.id.user_name_text_view);
+        username.setText(userName);
+
+        // Log out button
+        logoutButton = rootView.findViewById(R.id.materialButton);
+        logoutButton.setOnClickListener(v -> {
+            FirebaseAuth.getInstance().signOut();
+            Intent intent = new Intent(getActivity(), FirebaseUIActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+            Toast.makeText(this.getContext(), "Logged Out", Toast.LENGTH_SHORT).show();
+            getActivity().finish();
+            startActivity(intent);
+        });
 
         locationHandler = new LocationHandler(this);
         locationHandler.getAll();
