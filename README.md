@@ -51,40 +51,41 @@ OPEN AI API-Chatgpt 3.5
 ## Sample Demo screenshots
 Sign in page:
 
-![Screenshot](screenshots/signin.png)
+<img src="screenshots/signin.png"  width="600">
 
 Add ingredient page:
 
-![Screenshot](screenshots/add_ing.png)
+<img src="screenshots/add_ing.png"  width="600">
 
 Ingredient image recognition: 
 
-![Screenshot](screenshots/image%20recog.png)
+<img src="screenshots/image%20recog.png"  width="600">
 
 Ingredients list: 
 
-![Screenshot](screenshots/ingredients_list.png)
+<img src="screenshots/ingredients_list.png"  width="600">
 
 Find recipes:
 
+<img src="screenshots/add_ing.png"  width="600">
 ![Screenshot](screenshots/find_recipes.png)
 
 Recipe list:
 
-![Screenshot](screenshots/recipe_list.png)
+<img src="screenshots/recipe_list.png"  width="600">
 
 Recipe details:
 
-![Screenshot](screenshots/recipe_Detailspng.png)
+<img src="screenshots/recipe_Detailspng.png"  width="600">
 
-![Screenshot](screenshots/recipe_Details1png.png)
+<img src="screenshots/recipe_Details1png.png"  width="600">
 
 Favorites:
 
-![Screenshot](screenshots/fav_r.png)
+<img src="screenshots/fav_r.png"  width="600">
 
 Profile:
 
-![Screenshot](screenshots/profile.png)
+<img src="screenshots/profile.png"  width="600">
 
 
