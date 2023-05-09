@@ -26,7 +26,7 @@ public class IngredientHandler implements UserListener {
     public void add(String name, double quantity,
                     String img, String notes,
                     Date expirationTime, Date createTime, String locationId,
-                    String categoryId, String unitId, String yqhB12pGizP4409dKZ7Fk8i0fNv1) {
+                    String categoryId, String unitId) {
         DatabaseReference list = dbRef.push();
 
         Ingredient data = new Ingredient(name, quantity, img, notes,
