@@ -28,7 +28,8 @@ Our app will let users sign up for an account free of cost. Users can just take 
 
 
 
-## Technologies used
+## Technologies used  
+Android Native  
 Language:Java <br>
 Firebase authentication and storage <br>
 AWS Rekognition <br>
