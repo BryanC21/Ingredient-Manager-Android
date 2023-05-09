@@ -48,6 +48,43 @@ OPEN AI API-Chatgpt 3.5
 * In the profile page, users can customize their app by adding or removing units and locations.<br>
 * The user can also switch accounts or logout on the profile page.<br>
 
+## Sample Demo screenshots
+Sign in page:
 
+![Screenshot](screenshots/signin.png)
+
+Add ingredient page:
+
+![Screenshot](screenshots/add_ing.png)
+
+Ingredient image recognition: 
+
+![Screenshot](screenshots/image%20recog.png)
+
+Ingredients list: 
+
+![Screenshot](screenshots/ingredients_list.png)
+
+Find recipes:
+
+![Screenshot](screenshots/find_recipes.png)
+
+Recipe list:
+
+![Screenshot](screenshots/recipe_list.png)
+
+Recipe details:
+
+![Screenshot](screenshots/recipe_Detailspng.png)
+
+![Screenshot](screenshots/recipe_Details1png.png)
+
+Favorites:
+
+![Screenshot](screenshots/fav_r.png)
+
+Profile:
+
+![Screenshot](screenshots/profile.png)
 
 
